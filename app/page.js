@@ -1,9 +1,8 @@
-import Image from 'next/image'
-import styles from '@/app/_styles/homepage.module.css'
+import s from '@/app/_styles/_pages/homepage.module.css'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className={styles.page}>
+    <div className={s.page}>
       Hello world
     </div>
   )
