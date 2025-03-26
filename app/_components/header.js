@@ -6,7 +6,8 @@ export default function Header() {
     <header className={s.header}>
       <Link href='/calendar/days'>Calendar/Days</Link>
       <Link href='/calendar/months'>Calendar/Months</Link>
-      <Link href='/day/000000'>Day 00.00.00</Link>
+      <Link href='/day/000000'>Day 0000-00-00</Link>
+      <Link href='/day/20250319'>Day 2025-03-19</Link>
       <Link href='/chart'>Chart</Link>
       <Link href='/account'>Account</Link>
       <Link href='/account/settings'>Settings</Link>
