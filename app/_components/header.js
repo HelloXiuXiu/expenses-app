@@ -1,7 +1,10 @@
 import Link from 'next/link'
+import { auth } from '@/app/_lib/auth'
 import s from '@/app/_styles/_components/header.module.css'
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth()
+
   return (
     <header className={s.header}>
       <Link href='/calendar/days'>Calendar/Days</Link>
@@ -11,6 +14,19 @@ export default function Header() {
       <Link href='/chart'>Chart</Link>
       <Link href='/account'>Account</Link>
       <Link href='/account/settings'>Settings</Link>
+      {session?.user?.image ? (
+        <div className={s.user}>
+          <img
+            alt='user avatar'
+            src={session.user.image}
+            referrerPolicy='no-referrer'
+            className={s.userImage}
+          />
+          <p>{session.user.name}</p>
+        </div>
+        ) : (
+        <Link href='/login'>Login</Link>
+      )}
     </header>
   )
 }
