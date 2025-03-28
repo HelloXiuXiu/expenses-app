@@ -1,0 +1,14 @@
+.button {
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: lightpink;
+}

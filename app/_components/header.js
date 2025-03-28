@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { auth } from '@/app/_lib/auth'
-import s from '@/app/_styles/_components/header.module.css'
+import SignOutButton from '@/app/_components/SignOutButton'
+import s from '@/app/_styles/_components/Header.module.css'
 
 export default async function Header() {
   const session = await auth()
@@ -15,15 +16,18 @@ export default async function Header() {
       <Link href='/account'>Account</Link>
       <Link href='/account/settings'>Settings</Link>
       {session?.user?.image ? (
-        <div className={s.user}>
-          <img
-            alt='user avatar'
-            src={session.user.image}
-            referrerPolicy='no-referrer'
-            className={s.userImage}
-          />
-          <p>{session.user.name}</p>
-        </div>
+        <>
+          <div className={s.user}>
+            <img
+              alt='user avatar'
+              src={session.user.image}
+              referrerPolicy='no-referrer'
+              className={s.userImage}
+            />
+            <p>{session.user.name}</p>
+          </div>
+          <SignOutButton />
+        </>
         ) : (
         <Link href='/login'>Login</Link>
       )}

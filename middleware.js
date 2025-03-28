@@ -4,6 +4,10 @@ import { auth } from '@/app/_lib/auth'
 export const middleware = async (request) => {
   const session = await auth()
 
+  if (session && request.nextUrl.pathname === '/login') {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
   if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/login') {
     return NextResponse.next()
   }
@@ -14,5 +18,5 @@ export const middleware = async (request) => {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',]
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|static/).*)',]
 }
