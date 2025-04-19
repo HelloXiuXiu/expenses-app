@@ -1,14 +1,31 @@
-import { signOutFunction } from '@/app/_lib/actions'
-import s from '@/app/_styles/_components/SignOutButton.module.css'
+'use client'
 
-function SignOutButton() {
+import { useTransition } from 'react'
+import { signOutAction } from '@/app/_lib/actions'
+import s from '@/app/_styles/_components/SignInButton.module.css'
+
+function SignInButton() {
+  const [isPending, startTransition] = useTransition()
+
+  function handleSignOut() {
+    startTransition(async () => {
+      const { errorMessage } = await signOutAction()
+      if (!errorMessage) {
+        console.log('signed out')
+      } else {
+        console.log(errorMessage)
+      }
+    })
+  }
+
   return (
-    <form action={signOutFunction}>
-      <button className={s.button}>
-        <span>Sign Out</span>
+    <form action={() => handleSignOut()}>
+      <button className={s.button} disabled={isPending} >
+        <span>{isPending ? '...signing out' : 'Sign Out'}</span>
       </button>
     </form>
   )
 }
 
-export default SignOutButton
+export default SignInButton
+

@@ -1,11 +1,34 @@
 'use server'
+import { getSupabaseAuth } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
-import { signIn, signOut } from './auth.js'
+export async function signInAction(provider) {
+  try {
+    const auth = await getSupabaseAuth()
+    const { data, error } = await auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`
+      }
+    })
 
-export async function signInFunction() {
-  await signIn('google', { redirectTo: '/calendar/days'})
+    if (error) throw error
+    return { errorMessage: null, url: data.url }
+
+  } catch (error) {
+    return { errorMessage: 'error logging in' }
+  }
 }
 
-export async function signOutFunction() {
-  await signOut({ redirectTo: '/'})
+export async function signOutAction() {
+  try {
+    const auth = await getSupabaseAuth()
+    const { error } = await auth.signOut()
+
+    if (error) throw error
+    return { errorMessage: null }
+
+  } catch (error) {
+    return { errorMessage: 'error signing out' }
+  }
 }

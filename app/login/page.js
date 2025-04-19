@@ -1,11 +1,15 @@
+import { getUser } from '@/lib/auth'
 import SignInButton from '@/app/_components/SignInButton'
+import SignOutButton from '@/app/_components/SignOutButton'
 import s from '@/app/_styles/_pages/homepage.module.css'
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const user = await getUser()
+
   return (
     <div className={s.page}>
       <h1>LOGIN</h1>
-      <SignInButton />
+      {user ? <SignOutButton /> : <SignInButton />}
     </div>
   )
 }
