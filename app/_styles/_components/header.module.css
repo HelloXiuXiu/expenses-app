@@ -10,15 +10,3 @@
   background: lightpink;
   font-size: 14px
 }
-
-.user {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.userImage {
-  width: 24px;
-  heignt: 24px;
-  border-radius: 12px;
-}

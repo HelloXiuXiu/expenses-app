@@ -1,13 +1,11 @@
 'use client'
 
 import { useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { signInAction } from '@/app/_lib/actions'
 import s from '@/app/_styles/_components/SignInButton.module.css'
 
-function SignInButton() {
-  const router = useRouter()
+function SignInButton({ style }) {
   const [isPending, startTransition] = useTransition()
 
   function handleLogin(provider) {
@@ -25,17 +23,19 @@ function SignInButton() {
   }
 
   return (
-    <form action={() => handleLogin('github')}>
-      <button className={s.button} disabled={isPending} >
-         {/* <Image
-                   src="/static/google.svg"
-                   width={24}
-                   height={24}
-                   alt='Google logo'
-                 /> */}
-        <span>{isPending ? '...logging in' : 'Signin with GitHub'}</span>
-      </button>
-    </form>
+    <button
+      className={s.button}
+      disabled={isPending}
+      onClick={() => handleLogin('github')}
+    >
+       <Image
+        src="/static/github.svg"
+        width={24}
+        height={24}
+        alt='Github logo'
+       />
+      <span>{isPending ? '...logging in' : 'Signin with GitHub'}</span>
+    </button>
   )
 }
 

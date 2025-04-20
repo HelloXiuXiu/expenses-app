@@ -11,10 +11,8 @@ export const config = {
   ],
 }
 
-async function updateSession(request, responce) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+async function updateSession(request) {
+  let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
     process.env.SUPABASE_URL,
@@ -37,9 +35,7 @@ async function updateSession(request, responce) {
     }
   )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (
     !user &&

@@ -1,15 +1,19 @@
-import { getUser } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
 import SignInButton from '@/app/_components/SignInButton'
-import SignOutButton from '@/app/_components/SignOutButton'
-import s from '@/app/_styles/_pages/homepage.module.css'
+import s from '@/app/_styles/_pages/login.module.css'
 
 export default async function LoginPage() {
-  const user = await getUser()
+  const session = await getSession()
+
+  if (session?.user) {
+    redirect('/')
+  }
 
   return (
     <div className={s.page}>
       <h1>LOGIN</h1>
-      {user ? <SignOutButton /> : <SignInButton />}
+      <SignInButton />
     </div>
   )
 }
