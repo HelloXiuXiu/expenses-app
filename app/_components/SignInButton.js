@@ -14,7 +14,10 @@ function SignInButton() {
     startTransition(async () => {
       const { errorMessage, url } = await signInAction(provider)
       if (!errorMessage && url) {
-        router.push(url)
+        // router leads to CORS error that does not affect the auth flow though (at least on localhost)
+        // it happenes because server tries to fetch() from this url (github.com) instead of just going there
+        // router.push(url)
+        window.location.href = url
       } else {
         console.log(errorMessage)
       }

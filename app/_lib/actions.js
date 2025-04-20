@@ -1,6 +1,6 @@
 'use server'
+
 import { getSupabaseAuth } from '@/lib/auth'
-import { redirect } from 'next/navigation'
 
 export async function signInAction(provider) {
   try {
