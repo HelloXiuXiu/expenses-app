@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getDays } from '@/app/_lib/data-service'
+import { getDays } from '@/lib/services/data-service'
 import s from '@/app/_styles/_pages/calendarDaysPage.module.css'
 
 export default async function CalendarDaysPage() {
