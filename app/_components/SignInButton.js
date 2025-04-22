@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react'
 import Image from 'next/image'
-import { signInAction } from '@/app/_lib/actions'
+import { signInAction } from '@/lib/actions/actions'
 import s from '@/app/_styles/_components/SignInButton.module.css'
 
 function SignInButton({ style }) {

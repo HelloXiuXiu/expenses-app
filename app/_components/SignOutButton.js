@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { signOutAction } from '@/app/_lib/actions'
+import { signOutAction } from '@/lib/actions/actions'
 import s from '@/app/_styles/_components/SignInButton.module.css'
 
 function SignInButton({ style = {} }) {
