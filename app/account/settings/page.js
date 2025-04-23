@@ -1,5 +1,6 @@
 import { getUserSettings } from '@/lib/services/data-service'
 import { getUser } from '@/lib/auth'
+import UpdateSettingsForm from '@/app/_components/UpdateSettingsForm'
 
 export default async function SettingsPage() {
   const settings = await getUserSettings()
@@ -18,6 +19,7 @@ export default async function SettingsPage() {
           <li key={title}>{title} <span style={{ color }}>{color}</span></li>
         ))}
       </ul>
+      <UpdateSettingsForm initialSettings={settings} />
     </>
   )
 }

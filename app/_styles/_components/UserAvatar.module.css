@@ -20,7 +20,7 @@
   right: -70px;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   gap: 10px;
   background-color: white;
   border-radius: 4px;
