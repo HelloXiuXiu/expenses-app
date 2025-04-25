@@ -1,5 +1,4 @@
 import { getUserSettings } from '@/lib/services/data-service'
-import { getUser } from '@/lib/auth'
 import UpdateSettingsForm from '@/app/_components/UpdateSettingsForm'
 
 export default async function SettingsPage() {
