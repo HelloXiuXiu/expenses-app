@@ -27,7 +27,6 @@ export default function AddExpenseForm({ settings }) {
         amount: parseFloat(form.amount),
         description: form.description,
         category: form.category,
-        category_color: categories[form.category],
         currency: settings.currency,
         // date: new Date().toISOString(),
       })

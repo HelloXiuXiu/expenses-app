@@ -11,6 +11,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
     username: initialSettings.username || '',
     currency: initialSettings.currency || '',
     categories: initialSettings.categories || {},
+    deleted_categories: initialSettings.deleted_categories || {},
   })
 
   const [newCategory, setNewCategory] = useState('')
@@ -50,8 +51,21 @@ export default function UpdateSettingsForm({ initialSettings }) {
 
   const handleSubmit = e => {
     e.preventDefault()
+    const newDeletedCategories = {
+      ...initialSettings.deleted_categories,
+      ...getDeletedCategories(initialSettings.categories, form.categories),
+    }
+    for (const key in newDeletedCategories) {
+      if (key in form.categories) {
+        delete newDeletedCategories[key]
+      }
+    }
+
     startTransition(async () => {
-      const res = await updateSettingsAction(form)
+      const res = await updateSettingsAction({
+        ...form,
+        deleted_categories: newDeletedCategories
+      })
       setStatus(res.error ? 'error' : 'success')
     })
   }
@@ -128,7 +142,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
         </div>
       </div>
 
-      <button type='submit' disabled={isPending} className={s.button}>
+      <button type='submit' disabled={isPending || !isDataChanged(initialSettings, form)} className={s.button}>
         {isPending ? 'Saving...' : 'Save Settings'}
       </button>
 
@@ -136,4 +150,35 @@ export default function UpdateSettingsForm({ initialSettings }) {
       {status === 'error' && <p className={s.error}>Something went wrong.</p>}
     </form>
   )
+}
+
+function getDeletedCategories(prev, cur) {
+  const deleted = {}
+
+  for (const key in prev) {
+    if (!cur[key]) {
+      deleted[key] = prev[key]
+    }
+  }
+
+  return deleted
+}
+
+function isCategoriesChanged(prev, cur) {
+  const keys1 = Object.keys(prev)
+  const keys2 = Object.keys(cur)
+
+  if (keys1.length !== keys2.length) return true
+
+  for (const key of keys1) {
+    if (prev[key] !== cur[key]) return true
+  }
+
+  return false
+}
+
+function isDataChanged(prev, cur) {
+  return prev.username !== cur.username ||
+    prev.currency !== cur.currency ||
+    isCategoriesChanged(prev.categories, cur.categories)
 }
