@@ -30,7 +30,7 @@ export default async function CalendarDaysPage() {
         Days Calendar
       </h1>
       {grouped.map(day => (
-        <Link className={s.day} key={day.id} href={`/day/${day.date.replaceAll('-','')}`}>
+        <Link className={s.day} key={day.date} href={`/day/${day.date.replaceAll('-','')}`}>
           <div>Day: {day.date}</div>
           <div>Money spent:</div>
           {Object.keys(day.amount).map(currency => (
