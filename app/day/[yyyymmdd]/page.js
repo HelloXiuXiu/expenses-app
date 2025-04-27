@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getDayData, getUserSettings } from '@/lib/services/data-service'
 import { DeleteExpense } from '@/app/_components/DeleteExpense'
+import s from '@/app/_styles/_pages/day.module.css'
 
 export default async function DayPage({ params }) {
   const { yyyymmdd } = await params
@@ -19,7 +20,7 @@ export default async function DayPage({ params }) {
   })
 
   return (
-    <>
+    <div className={s.page}>
       <h1>Day { day }</h1>
       <br />
       <div>
@@ -42,6 +43,6 @@ export default async function DayPage({ params }) {
         ))}
       </ul>
       <Link href='/calendar/days'>← Back to calendar</Link>
-    </>
+    </div>
   )
 }

@@ -1,16 +1,17 @@
-import Link from 'next/link'
-import { getAllExpenses } from '@/lib/services/data-service'
-import s from '@/app/_styles/_pages/calendarDaysPage.module.css'
+import { getAllExpenses, getUserSettings } from '@/lib/services/data-service'
+import { Day } from '@/app/_components/Day'
 
 export default async function CalendarDaysPage() {
   const data = await getAllExpenses()
+  const settings = await getUserSettings()
 
   const grouped = Object.values(
     data.reduce((acc, item) => {
       if (!acc[item.date]) {
         acc[item.date] = {
           date: item.date,
-          amount: {}
+          amount: {},
+          categories: []
         }
       }
 
@@ -19,6 +20,9 @@ export default async function CalendarDaysPage() {
       }
 
       acc[item.date].amount[item.currency] += item.amount
+      if (!acc[item.date].categories.includes(item.category)) {
+        acc[item.date].categories.push(item.category)
+      }
 
       return acc
     }, {})
@@ -26,20 +30,7 @@ export default async function CalendarDaysPage() {
 
   return (
     <>
-      <h1>
-        Days Calendar
-      </h1>
-      {grouped.map(day => (
-        <Link className={s.day} key={day.date} href={`/day/${day.date.replaceAll('-','')}`}>
-          <div>Day: {day.date}</div>
-          <div>Money spent:</div>
-          {Object.keys(day.amount).map(currency => (
-            <div key={currency}>
-              {day.amount[currency]} {currency}
-            </div>
-          ))}
-        </Link>
-      ))}
+      {grouped.reverse().map(day => <Day key={day.date} day={day} settings={settings} />)}
     </>
   )
 }

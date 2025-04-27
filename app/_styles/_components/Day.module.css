@@ -1,0 +1,79 @@
+.day {
+  position: relative;
+  display: flex;
+  height: 108px;
+  gap: 4px;
+  padding: 10px var(--side-padding);
+  border-bottom: 1px solid var(--primary);
+  overflow: hidden;
+  transition: background-color 0.2s, color 0s;
+}
+
+.day:hover {
+  background-color: var(--background-hover-00);
+  color: var(--primary-hover);
+  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.7);
+  transition: background-color 0.2s, color 0.6s;
+}
+
+.day:hover + .day {
+  background-color: var(--background-hover-01);
+}
+
+.day:hover + .day + .day {
+  background-color: var(--background-hover-02);
+}
+
+.day:hover .amount {
+  transform: translateY(-14px);
+}
+
+.date {
+  flex-shrink: 0;
+  width: 50px;
+  text-align: right;
+  display: flex;
+  align-items: flex-end;
+  font-weight: 500;
+}
+
+.amountWrap {
+  overflow: hidden;
+  transform: translateY(10px);
+}
+
+.amount {
+  font-size: 113px;
+  line-height: 1;
+  transform: translateY(0px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-y: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.currency {
+  font-size: 12px;
+  text-transform: lowercase;
+  font-weight: 500;
+  transform: translate(-2px, 20px);
+}
+
+.riteSide {
+  flex-shrink: 0;
+  width: 120px;
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.categories {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.category {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}

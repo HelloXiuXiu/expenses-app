@@ -1,11 +1,12 @@
 import { getUserSettings } from '@/lib/services/data-service'
 import UpdateSettingsForm from '@/app/_components/UpdateSettingsForm'
+import s from '@/app/_styles/_pages/settings.module.css'
 
 export default async function SettingsPage() {
   const settings = await getUserSettings()
 
   return (
-    <>
+    <div className={s.page}>
       <h1>
         Settings
       </h1>
@@ -19,6 +20,6 @@ export default async function SettingsPage() {
         ))}
       </ul>
       <UpdateSettingsForm initialSettings={settings} />
-    </>
+    </div>
   )
 }
