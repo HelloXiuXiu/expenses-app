@@ -1,9 +1,17 @@
 import { getAllExpenses, getUserSettings } from '@/lib/services/data-service'
-import { Day } from '@/app/_components/Day'
+import { Day, DayEmpty } from '@/app/_components/Day'
+
+const EMPTY_DAYS_NUM = 3
+const getNextDays = n => Array.from({ length: n }, (_, i) => {
+  const d = new Date()
+  d.setDate(d.getDate() + i + 1)
+  return d.toISOString().split('T')[0]
+})
 
 export default async function CalendarDaysPage() {
   const data = await getAllExpenses()
   const settings = await getUserSettings()
+  const emptyDays = getNextDays(EMPTY_DAYS_NUM)
 
   const grouped = Object.values(
     data.reduce((acc, item) => {
@@ -30,7 +38,8 @@ export default async function CalendarDaysPage() {
 
   return (
     <>
-      {grouped.reverse().map(day => <Day key={day.date} day={day} settings={settings} />)}
+      {grouped.map(day => <Day key={day.date} day={day} settings={settings} />)}
+      {emptyDays.map(day => <DayEmpty key={day + 1} day={day} />)}
     </>
   )
 }

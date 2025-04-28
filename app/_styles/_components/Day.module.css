@@ -10,22 +10,16 @@
 }
 
 .day:hover {
-  background-color: var(--background-hover-00);
-  color: var(--primary-hover);
-  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.7);
+  background-color: var(--background-hover-02);
   transition: background-color 0.2s, color 0.6s;
 }
 
-.day:hover + .day {
-  background-color: var(--background-hover-01);
-}
-
-.day:hover + .day + .day {
-  background-color: var(--background-hover-02);
-}
-
 .day:hover .amount {
-  transform: translateY(-14px);
+  transform: translateY(2px);
+}
+
+.day:hover .currency {
+  transform: translateY(-18px);
 }
 
 .date {
@@ -38,14 +32,18 @@
 }
 
 .amountWrap {
+  position: relative;
+  height: 108px;
+  transform: translateY(-10px);
   overflow: hidden;
-  transform: translateY(10px);
+  transition: transform 0.2s ease-in-out;
+  padding-right: 30px;
 }
 
 .amount {
+  transform: translateY(20px);
   font-size: 113px;
   line-height: 1;
-  transform: translateY(0px);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow-y: hidden;
@@ -53,10 +51,17 @@
 }
 
 .currency {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 30px;
   font-size: 12px;
   text-transform: lowercase;
   font-weight: 500;
-  transform: translate(-2px, 20px);
+  white-space: nowrap;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  transition: transform 0.2s ease-in-out;
 }
 
 .riteSide {
@@ -68,12 +73,21 @@
 
 .categories {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
+  max-height: 70px;
   margin-top: 4px;
+  overflow: hidden;
 }
 
 .category {
   width: 8px;
   height: 8px;
   border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.categotyCount {
+  font-size: 12px;
+  line-height: 7px;
 }
