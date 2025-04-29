@@ -1,12 +1,7 @@
 import { getAllExpenses, getUserSettings } from '@/lib/services/data-service'
-import { Day, DayEmpty } from '@/app/_components/Day'
+import { Day, DayEmpty, DayTodayEmpty } from '@/app/_components/Day'
 
 const EMPTY_DAYS_NUM = 3
-const getNextDays = n => Array.from({ length: n }, (_, i) => {
-  const d = new Date()
-  d.setDate(d.getDate() + i + 1)
-  return d.toISOString().split('T')[0]
-})
 
 export default async function CalendarDaysPage() {
   const data = await getAllExpenses()
@@ -39,7 +34,24 @@ export default async function CalendarDaysPage() {
   return (
     <>
       {grouped.map(day => <Day key={day.date} day={day} settings={settings} />)}
+      {!isToday(grouped[grouped.length - 1].date) && <DayTodayEmpty day={getToday()} settings={settings} />}
       {emptyDays.map(day => <DayEmpty key={day + 1} day={day} />)}
     </>
   )
+}
+
+function getNextDays(n) {
+  return Array.from({ length: n }, (_, i) => {
+    const d = new Date()
+    d.setDate(d.getDate() + i + 1)
+    return d.toISOString().split('T')[0]
+  })
+}
+
+function isToday(date) {
+  return new Date().toISOString().split('T')[0] === date
+}
+
+function getToday() {
+  return new Date().toISOString().split('T')[0]
 }

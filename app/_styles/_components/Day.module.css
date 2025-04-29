@@ -3,23 +3,23 @@
   display: flex;
   height: 108px;
   gap: 4px;
-  padding: 10px var(--side-padding);
+  padding: 8px var(--side-padding);
   border-bottom: 1px solid var(--primary);
   overflow: hidden;
-  transition: background-color 0.2s, color 0s;
+  transition: background-color 0.2s;
 }
 
 .day:hover {
   background-color: var(--background-hover-02);
-  transition: background-color 0.2s, color 0.6s;
+  transition: background-color 0.2s;
 }
 
 .day:hover .amount {
-  transform: translateY(2px);
+  transform: translateY(0);
 }
 
 .day:hover .currency {
-  transform: translateY(-18px);
+  transform: translateY(-20px);
 }
 
 .date {
@@ -34,13 +34,14 @@
 .amountWrap {
   position: relative;
   height: 108px;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   overflow: hidden;
   transition: transform 0.2s ease-in-out;
   padding-right: 30px;
 }
 
 .amount {
+  font-family: 'Inter Tight', sans-serif;
   transform: translateY(20px);
   font-size: 113px;
   line-height: 1;
