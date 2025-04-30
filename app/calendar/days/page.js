@@ -1,7 +1,8 @@
 import { getAllExpenses, getUserSettings } from '@/lib/services/data-service'
 import { Day, DayEmpty, DayTodayEmpty } from '@/app/_components/Day'
+import { CalendarMenu } from '@/app/_components/CalendarMenu'
 
-const EMPTY_DAYS_NUM = 3
+const EMPTY_DAYS_NUM = 2
 
 export default async function CalendarDaysPage() {
   const data = await getAllExpenses()
@@ -31,11 +32,15 @@ export default async function CalendarDaysPage() {
     }, {})
   )
 
+  const weekSum = getWeekSum(grouped, settings.currency)
+  const monthSum = getMonthSum(grouped, settings.currency)
+
   return (
     <>
+      <CalendarMenu sumWeek={weekSum} sumMonth={monthSum} categories={settings.categories}/>
+      {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
+      {!isToday(grouped[0].date) && <DayTodayEmpty day={getToday()} settings={settings} />}
       {grouped.map(day => <Day key={day.date} day={day} settings={settings} />)}
-      {!isToday(grouped[grouped.length - 1].date) && <DayTodayEmpty day={getToday()} settings={settings} />}
-      {emptyDays.map(day => <DayEmpty key={day + 1} day={day} />)}
     </>
   )
 }
@@ -54,4 +59,39 @@ function isToday(date) {
 
 function getToday() {
   return new Date().toISOString().split('T')[0]
+}
+
+function getWeekSum(data, currency) {
+  if (!data.length) return 0
+
+  const start = new Date()
+  const n = start.getDay() || 7
+  const end = new Date(start - (n - 1) * 86400000).toISOString().split('T')[0]
+
+  let sum = 0
+
+  for (let i = 0; i < data.length; i++) {
+    sum += (data[i].amount[currency] || 0)
+    if (data[i].date === end) break
+  }
+
+  return sum.toFixed(2)
+}
+
+function getMonthSum(data, currency) {
+    if (!data.length) return 0
+
+  const start = new Date()
+  const monthStart = new Date(start.getFullYear(), start.getMonth(), 1)
+    .toISOString()
+    .split('T')[0]
+
+  let sum = 0
+
+  for (let i = 0; i < data.length; i++) {
+    sum += (data[i].amount[currency] || 0)
+    if (data[i].date === monthStart) break
+  }
+
+  return sum.toFixed(2)
 }
