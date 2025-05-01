@@ -1,6 +1,5 @@
-import { Geist, Geist_Mono } from 'next/font/google'
-import '@/app/_styles/globals.css'
 import Header from '@/app/_components/Header'
+import '@/app/_styles/globals.css'
 
 export const metadata = {
   title: 'Create Next App',
@@ -9,7 +8,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang="en">
+      <head>
+        <link
+          rel='preload'
+          href='/fonts/Inter-VariableFont_opsz,wght.woff2'
+          as='font'
+          type='font/woff2'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preload'
+          href='/fonts/InterTight-VariableFont_wght.woff2'
+          as='font'
+          type='font/woff2'
+          crossOrigin='anonymous'
+        />
+      </head>
       <body>
         <Header />
         {children}

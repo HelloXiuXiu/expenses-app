@@ -8,7 +8,7 @@ export const Day = ({ day, settings }) => {
     <Link className={s.day + ' day'} href={`/day/${day.date.replaceAll('-','')}`}>
       <div className={s.date}>{day.date.split('-').slice(-2).reverse().join('/')}</div>
       <div className={s.amountWrap}>
-        <div className={s.amount}>{day.amount[settings.currency]}</div>
+        <div className={s.amount}>{+day.amount[settings.currency].toFixed(2)}</div>
         <div className={s.currency}>{settings.currency}</div>
       </div>
       <div className={s.riteSide}>

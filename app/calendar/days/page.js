@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import { getAllExpenses, getUserSettings } from '@/lib/services/data-service'
 import { Day, DayEmpty, DayTodayEmpty } from '@/app/_components/Day'
 import { CalendarMenu } from '@/app/_components/CalendarMenu'
@@ -9,23 +10,29 @@ export default async function CalendarDaysPage() {
   const settings = await getUserSettings()
   const emptyDays = getNextDays(EMPTY_DAYS_NUM)
 
+  const cookieStore = await cookies()
+  const selectedCategories = cookieStore.get('selectedCategories')?.value?.replaceAll('_', ' ')
+
   const grouped = Object.values(
     data.reduce((acc, item) => {
-      if (!acc[item.date]) {
-        acc[item.date] = {
-          date: item.date,
-          amount: {},
-          categories: []
+
+      if (selectedCategories.includes(item.category)) {
+        if (!acc[item.date]) {
+          acc[item.date] = {
+            date: item.date,
+            amount: {},
+            categories: []
+          }
         }
-      }
 
-      if (!acc[item.date].amount[item.currency]) {
-        acc[item.date].amount[item.currency] = 0
-      }
+        if (!acc[item.date].amount[item.currency]) {
+          acc[item.date].amount[item.currency] = 0
+        }
 
-      acc[item.date].amount[item.currency] += item.amount
-      if (!acc[item.date].categories.includes(item.category)) {
-        acc[item.date].categories.push(item.category)
+        acc[item.date].amount[item.currency] += item.amount
+        if (!acc[item.date].categories.includes(item.category)) {
+          acc[item.date].categories.push(item.category)
+        }
       }
 
       return acc
@@ -37,7 +44,12 @@ export default async function CalendarDaysPage() {
 
   return (
     <>
-      <CalendarMenu sumWeek={weekSum} sumMonth={monthSum} categories={settings.categories}/>
+      <CalendarMenu
+        sumWeek={weekSum}
+        sumMonth={monthSum}
+        selectedCategories={selectedCategories}
+        allCategories={settings.categories}
+      />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
       {!isToday(grouped[0].date) && <DayTodayEmpty day={getToday()} settings={settings} />}
       {grouped.map(day => <Day key={day.date} day={day} settings={settings} />)}

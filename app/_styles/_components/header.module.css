@@ -11,7 +11,7 @@
   font-size: 14px;
   background-color: var(--background-00);
   border-bottom: 1px solid var(--primary);
-  z-index: 999;
+  z-index: 1000;
 }
 
 .addButton {

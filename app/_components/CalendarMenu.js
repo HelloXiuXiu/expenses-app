@@ -1,12 +1,32 @@
 'use client'
 
 import React, { useState } from 'react'
+import { SelectCategoriesPopup } from '@/app/_components/SelectCategoriesPopup'
 import s from '@/app/_styles/_components/CalendarMenu.module.css'
 
-export const CalendarMenu = ({ sumWeek, sumMonth, categories }) => {
-  const [isOpen, setIsOpen ] = useState(false)
+export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, allCategories }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
 
-  const categoriesLenth = Object.keys(categories).length
+  const categoriesLenth = Object.keys(allCategories).length
+  const selectedLength = selectedCategories.split(',').length
+
+  function openPopUp(e) {
+    setIsCategoriesOpen(true)
+    window.addEventListener('click', closePopUp, { once: true, capture: true })
+  }
+
+  function closePopUp(e) {
+    const isButton = e.target.closest('.categories-popup-button')
+    const isOption = e.target.closest('.categories-popup-option')
+    if (!isButton && !isOption) e.stopPropagation()
+    if (e.target.closest('.categories-popup-box') && !isButton) {
+      window.addEventListener('click', closePopUp, { once: true, capture: true })
+      return
+    }
+    if (isButton) e.target.click()
+    setIsCategoriesOpen(false)
+  }
 
   return (
     <div className={s.menuBox} style={{ height: isOpen ? '40px' : '0' }}>
@@ -28,7 +48,19 @@ export const CalendarMenu = ({ sumWeek, sumMonth, categories }) => {
               </div>
             </div>
             <div className={s.closeTrig} onClick={() => setIsOpen(false)}>[ close ]</div>
-            <div className={s.categories}>7/{categoriesLenth} categories</div>
+            <div
+              className={s.categories + ' categories-popup-trig'}
+              style={{ opacity: isCategoriesOpen ? '0.5' : '1'}}
+              onClick={openPopUp}
+            >
+              {selectedLength}/{categoriesLenth} categories
+            </div>
+            {isCategoriesOpen && (
+              <SelectCategoriesPopup
+                selectedCategories={selectedCategories}
+                allCategories={allCategories}
+              />
+            )}
         </div>
       ) : (
         <div className={s.openTrig} onClick={() => setIsOpen(true)}>[ open stats ]</div>  

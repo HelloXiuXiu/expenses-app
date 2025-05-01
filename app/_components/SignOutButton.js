@@ -11,6 +11,7 @@ function SignInButton({ style = {} }) {
 
   function handleSignOut() {
     startTransition(async () => {
+      document.cookie = 'selectedCategories=; path=/calendar/days; SameSite=Lax; Max-Age=0'
       const { errorMessage } = await signOutAction()
       if (!errorMessage) {
         router.push('/login')
