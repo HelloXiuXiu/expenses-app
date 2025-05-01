@@ -28,7 +28,6 @@ export default function AddExpenseForm({ settings }) {
         description: form.description,
         category: form.category,
         currency: settings.currency,
-        // date: new Date().toISOString(),
       })
 
       setStatus(res?.error ? 'error' : 'success')

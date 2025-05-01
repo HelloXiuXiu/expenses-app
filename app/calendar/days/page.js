@@ -49,16 +49,16 @@ function getNextDays(n) {
   return Array.from({ length: n }, (_, i) => {
     const d = new Date()
     d.setDate(d.getDate() + i + 1)
-    return d.toISOString().split('T')[0]
+    return d.toLocaleDateString('en-CA')
   })
 }
 
 function isToday(date) {
-  return new Date().toISOString().split('T')[0] === date
+  return new Date().toLocaleDateString('en-CA') === date
 }
 
 function getToday() {
-  return new Date().toISOString().split('T')[0]
+  return new Date().toLocaleDateString('en-CA')
 }
 
 function getWeekSum(data, currency) {
@@ -66,13 +66,13 @@ function getWeekSum(data, currency) {
 
   const start = new Date()
   const n = start.getDay() || 7
-  const end = new Date(start - (n - 1) * 86400000).toISOString().split('T')[0]
+  const end = new Date(start - (n - 1) * 86400000).toLocaleDateString('en-CA')
 
   let sum = 0
 
   for (let i = 0; i < data.length; i++) {
+    if (data[i].date < end) break
     sum += (data[i].amount[currency] || 0)
-    if (data[i].date === end) break
   }
 
   return sum.toFixed(2)
@@ -83,14 +83,13 @@ function getMonthSum(data, currency) {
 
   const start = new Date()
   const monthStart = new Date(start.getFullYear(), start.getMonth(), 1)
-    .toISOString()
-    .split('T')[0]
+    .toLocaleDateString('en-CA')
 
   let sum = 0
 
   for (let i = 0; i < data.length; i++) {
+    if (data[i].date < monthStart) break
     sum += (data[i].amount[currency] || 0)
-    if (data[i].date === monthStart) break
   }
 
   return sum.toFixed(2)

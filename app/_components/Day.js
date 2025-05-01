@@ -38,8 +38,8 @@ export const DayTodayEmpty = ({ day, settings }) => {
     <Link className={s.day + ' day'} href={`/day/${day.replaceAll('-','')}`}>
       <div className={s.date}>{day.split('-').slice(-2).reverse().join('/')}</div>
       <div className={s.amountWrap}>
-        <div className={s.amount}>(+0)</div>
-        <div className={s.currency}>(+ add new)</div>
+        <div className={s.amount}>0</div>
+        <div className={s.currency}>rsd</div>
       </div>
       <div className={s.riteSide}>
         {getWeekday(day)}
