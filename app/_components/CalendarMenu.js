@@ -9,7 +9,7 @@ export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, allCategor
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
 
   const categoriesLenth = Object.keys(allCategories).length
-  const selectedLength = selectedCategories.split(',').length
+  const selectedLength = selectedCategories ? selectedCategories.split(',').length : 0
 
   function openPopUp(e) {
     setIsCategoriesOpen(true)

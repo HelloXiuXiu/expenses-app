@@ -8,7 +8,7 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => 
 
   function handleToggleCategory(category) {
     setSelected(selected => {
-      const arr = selected.split(',')
+      const arr = selected ? selected.split(',') : []
       if (arr.includes(category)) {
         return arr.filter(item => item !== category).join(',')
       } else {
@@ -34,7 +34,7 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => 
             <label key={allCategories[category]} className={s.category}>
               <input
                 type='checkbox'
-                checked={selected.includes(category)}
+                checked={selected?.includes(category)}
                 onChange={() => handleToggleCategory(category)}
               />
               <span>{category}</span>

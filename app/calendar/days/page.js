@@ -11,12 +11,15 @@ export default async function CalendarDaysPage() {
   const emptyDays = getNextDays(EMPTY_DAYS_NUM)
 
   const cookieStore = await cookies()
-  const selectedCategories = cookieStore.get('selectedCategories')?.value?.replaceAll('_', ' ')
+  const cookiesCategories = cookieStore.get('selectedCategories')?.value?.replaceAll('_', ' ')
+  const selectedCategories = cookiesCategories === 'all'
+    ? Object.keys(settings.categories).join(',')
+    : cookiesCategories
 
   const grouped = Object.values(
     data.reduce((acc, item) => {
 
-      if (selectedCategories.includes(item.category)) {
+      if (selectedCategories?.includes(item.category)) {
         if (!acc[item.date]) {
           acc[item.date] = {
             date: item.date,
@@ -51,8 +54,15 @@ export default async function CalendarDaysPage() {
         allCategories={settings.categories}
       />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
-      {!isToday(grouped[0].date) && <DayTodayEmpty day={getToday()} settings={settings} />}
+      {!isToday(grouped[0]?.date) && <DayTodayEmpty day={getToday()} settings={settings} />}
       {grouped.map(day => <Day key={day.date} day={day} settings={settings} />)}
+      {/*
+        TO-DO check if there is no categories at all
+        or user unselect them all
+      */}
+      {!selectedCategories && (
+        <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
+      )}
     </>
   )
 }
@@ -66,6 +76,7 @@ function getNextDays(n) {
 }
 
 function isToday(date) {
+  if (!date) return true
   return new Date().toLocaleDateString('en-CA') === date
 }
 
