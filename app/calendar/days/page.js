@@ -12,14 +12,16 @@ export default async function CalendarDaysPage() {
 
   const cookieStore = await cookies()
   const cookiesCategories = cookieStore.get('selectedCategories')?.value?.replaceAll('_', ' ')
-  const selectedCategories = cookiesCategories === 'all'
+
+  const selectedCategories = cookiesCategories === 'all' || cookiesCategories === undefined
     ? Object.keys(settings.categories).join(',')
     : cookiesCategories
 
   const grouped = Object.values(
     data.reduce((acc, item) => {
 
-      if (selectedCategories?.includes(item.category)) {
+      // show only selected and deleted?
+      if (selectedCategories?.includes(item.category) || settings.deleted_categories[item.category]) {
         if (!acc[item.date]) {
           acc[item.date] = {
             date: item.date,

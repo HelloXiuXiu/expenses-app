@@ -21,7 +21,7 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => 
     if (selected === selectedCategories) return
 
     startTransition(async () => {
-      document.cookie = `selectedCategories=${selected.replaceAll(' ', '_')}; path=/calendar/days; SameSite=Lax`
+      document.cookie = `selectedCategories=${selected.replaceAll(' ', '_')}; path=/; SameSite=Lax`
       await revalidatePage('/calendar/days')
     })
   }
@@ -34,7 +34,7 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => 
             <label key={allCategories[category]} className={s.category}>
               <input
                 type='checkbox'
-                checked={selected?.includes(category)}
+                checked={!!selected?.includes(category)}
                 onChange={() => handleToggleCategory(category)}
               />
               <span>{category}</span>

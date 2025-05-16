@@ -1,9 +1,13 @@
+import { cookies } from 'next/headers'
 import { getUserSettings } from '@/lib/services/data-service'
 import UpdateSettingsForm from '@/app/_components/UpdateSettingsForm'
 import s from '@/app/_styles/_pages/settings.module.css'
 
 export default async function SettingsPage() {
   const settings = await getUserSettings()
+  
+  const cookieStore = await cookies()
+  const cookiesCategories = cookieStore.get('selectedCategories')?.value?.replaceAll('_', ' ')
 
   return (
     <div className={s.page}>
@@ -19,7 +23,7 @@ export default async function SettingsPage() {
           <li key={title}>{title} <span style={{ color }}>{color}</span></li>
         ))}
       </ul>
-      <UpdateSettingsForm initialSettings={settings} />
+      <UpdateSettingsForm initialSettings={settings} cookiesCategories={cookiesCategories} />
     </div>
   )
 }

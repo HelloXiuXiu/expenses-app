@@ -6,7 +6,7 @@ import s from '@/app/_styles/_components/UpdateSettingsForm.module.css'
 
 const DEFAULT_COLOR = '#EEEEEE'
 
-export default function UpdateSettingsForm({ initialSettings }) {
+export default function UpdateSettingsForm({ initialSettings, cookiesCategories = '' }) {
   const [form, setForm] = useState({
     username: initialSettings.username || '',
     currency: initialSettings.currency || '',
@@ -51,9 +51,10 @@ export default function UpdateSettingsForm({ initialSettings }) {
 
   const handleSubmit = e => {
     e.preventDefault()
+    const deletedCategories = getDeletedCategories(initialSettings.categories, form.categories)
     const newDeletedCategories = {
       ...initialSettings.deleted_categories,
-      ...getDeletedCategories(initialSettings.categories, form.categories),
+      ...deletedCategories,
     }
     for (const key in newDeletedCategories) {
       if (key in form.categories) {
@@ -62,6 +63,11 @@ export default function UpdateSettingsForm({ initialSettings }) {
     }
 
     startTransition(async () => {
+      if (isCategoriesChanged(initialSettings.categories, form.categories)) {
+        // check if any change in categories and update categories
+        updateCookies(initialSettings, form, cookiesCategories)
+      }
+
       const res = await updateSettingsAction({
         ...form,
         deleted_categories: newDeletedCategories
@@ -152,6 +158,31 @@ export default function UpdateSettingsForm({ initialSettings }) {
   )
 }
 
+function updateCookies(initialSettings, form, cookies) {
+  if (!cookies || cookies === 'all') return
+
+  let newCookies = ''
+  const addedCategories = getAddedCategories(initialSettings.categories, form.categories)
+  const deletedCategories = getDeletedCategories(initialSettings.categories, form.categories)
+
+  if (isNotEmptyObj(deletedCategories)) {
+    newCookies = cookies.split(',')
+      .filter(category => !Object.keys(deletedCategories).includes(category))
+      .join(',')
+  }
+
+  if (isNotEmptyObj(addedCategories)) {
+    newCookies = [...cookies.split(','), ...Object.keys(addedCategories)]
+      .join(',')
+  }
+
+  document.cookie = `selectedCategories=${newCookies}; path=/; SameSite=Lax`
+}
+
+function isNotEmptyObj(obj) {
+  return !!Object.keys(obj).length
+}
+
 function getDeletedCategories(prev, cur) {
   const deleted = {}
 
@@ -162,6 +193,18 @@ function getDeletedCategories(prev, cur) {
   }
 
   return deleted
+}
+
+function getAddedCategories(prev, cur) {
+  const added = {}
+
+  for (const key in cur) {
+    if (!prev[key]) {
+      added[key] = cur[key]
+    }
+  }
+
+  return added
 }
 
 function isCategoriesChanged(prev, cur) {
