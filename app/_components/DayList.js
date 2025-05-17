@@ -5,13 +5,13 @@ import { Day, DayEmpty, DayTodayEmpty } from '@/app/_components/Day'
 import { CalendarMenu } from '@/app/_components/CalendarMenu'
 
 const EMPTY_DAYS_NUM = 2
-const emptyDays = getNextDays(EMPTY_DAYS_NUM)
 
 export const DayList = ({ data, settings }) => {
-  const [selectedCategories, setSelectedCategories] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState(null)
+  const [showDeleted, setShowDeleted] = useState(true)
 
   useEffect(() => {
-    // get categories from local storage or set and use all user's categories768
+    // get categories from local storage or set and use all user's categories
     const lsCategories = localStorage.getItem('selectedCategories')
     if (!lsCategories) {
       localStorage.setItem('selectedCategories', Object.keys(settings.categories).join(','))
@@ -19,11 +19,14 @@ export const DayList = ({ data, settings }) => {
     setSelectedCategories(lsCategories || Object.keys(settings.categories).join(','))
   }, [])
 
-  const groupedSelected = Object.values(
-    data.reduce((acc, item) => {
+  if (selectedCategories === null) return null
 
-      // show only selected and deleted?
-      if (selectedCategories?.includes(item.category) || settings.deleted_categories[item.category]) {
+  const groupedSelected =  Object.values(
+    data.reduce((acc, item) => {
+      if (
+        selectedCategories?.includes(item.category) ||
+        (settings.deleted_categories[item.category] && showDeleted)
+        ) {
         if (!acc[item.date]) {
           acc[item.date] = {
             date: item.date,
@@ -46,8 +49,11 @@ export const DayList = ({ data, settings }) => {
     }, {})
   )
 
+  const emptyDays = getNextDays(EMPTY_DAYS_NUM)
   const weekSum = getWeekSum(groupedSelected, settings.currency)
   const monthSum = getMonthSum(groupedSelected, settings.currency)
+
+  const noCategories = (!selectedCategories && !showDeleted) || !groupedSelected.length
 
   return (
     <>
@@ -57,11 +63,13 @@ export const DayList = ({ data, settings }) => {
         selectedCategories={selectedCategories}
         onSetSelectedCategories={setSelectedCategories}
         allCategories={settings.categories}
+        showDeleted={showDeleted}
+        setShowDeleted={setShowDeleted}
       />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
-      {!isToday(groupedSelected[0]?.date) && <DayTodayEmpty day={getToday()} settings={settings} />}
+      {!isToday(groupedSelected[0]?.date) && <DayTodayEmpty settings={settings} />}
       {groupedSelected.map(day => <Day key={day.date} day={day} settings={settings} />)}
-      {!selectedCategories && (
+      {noCategories && (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
       )}
     </>
@@ -79,10 +87,6 @@ function getNextDays(n) {
 function isToday(date) {
   if (!date) return true
   return new Date().toLocaleDateString('en-CA') === date
-}
-
-function getToday() {
-  return new Date().toLocaleDateString('en-CA')
 }
 
 function getWeekSum(data, currency) {

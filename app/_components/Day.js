@@ -33,16 +33,18 @@ export const Day = ({ day, settings }) => {
   )
 }
 
-export const DayTodayEmpty = ({ day, settings }) => {
+export const DayTodayEmpty = ({ settings }) => {
+  const today = new Date().toLocaleDateString('en-CA')
+
   return (
-    <Link className={s.day + ' day'} href={`/day/${day.replaceAll('-','')}`}>
-      <div className={s.date}>{day.split('-').slice(-2).reverse().join('/')}</div>
+    <Link className={s.day + ' day'} href={`/day/${today.replaceAll('-','')}`}>
+      <div className={s.date}>{today.split('-').slice(-2).reverse().join('/')}</div>
       <div className={s.amountWrap}>
         <div className={s.amount}>0</div>
         <div className={s.currency}>rsd</div>
       </div>
       <div className={s.riteSide}>
-        {getWeekday(day)}
+        {getWeekday(today)}
       </div>
     </Link>
   )

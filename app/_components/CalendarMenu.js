@@ -4,7 +4,15 @@ import React, { useState } from 'react'
 import { SelectCategoriesPopup } from '@/app/_components/SelectCategoriesPopup'
 import s from '@/app/_styles/_components/CalendarMenu.module.css'
 
-export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, onSetSelectedCategories, allCategories }) => {
+export const CalendarMenu = ({
+  sumWeek,
+  sumMonth,
+  selectedCategories,
+  onSetSelectedCategories,
+  allCategories,
+  showDeleted,
+  setShowDeleted
+}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
 
@@ -41,10 +49,10 @@ export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, onSetSelec
             </div>
             <div className={s.sums}>
               <div>
-                <span className={s.sum}>{sumWeek}</span> [ week ]
+                <span className={s.sum}>{(+sumWeek).toFixed(2)}</span> [ week ]
               </div>
               <div>
-                <span className={s.sum}>{sumMonth}</span> [ month ]
+                <span className={s.sum}>{(+sumMonth).toFixed(2)}</span> [ month ]
               </div>
             </div>
             <div className={s.closeTrig} onClick={() => setIsOpen(false)}>[ close ]</div>
@@ -60,6 +68,8 @@ export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, onSetSelec
                 selectedCategories={selectedCategories}
                 onSetSelectedCategories={onSetSelectedCategories}
                 allCategories={allCategories}
+                showDeleted={showDeleted}
+                setShowDeleted={setShowDeleted}
               />
             )}
         </div>

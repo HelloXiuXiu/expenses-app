@@ -1,6 +1,12 @@
 import s from '@/app/_styles/_components/SelectCategoriesPopup.module.css'
 
-export const SelectCategoriesPopup = ({ allCategories, selectedCategories, onSetSelectedCategories }) => {
+export const SelectCategoriesPopup = ({
+  allCategories,
+  selectedCategories,
+  onSetSelectedCategories,
+  showDeleted,
+  setShowDeleted
+}) => {
   function handleToggleCategory(category) {
     onSetSelectedCategories(selected => {
       let newCategories = ''
@@ -20,7 +26,7 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories, onSet
       <ul className={s.categories}>
         {Object.keys(allCategories).map(category => (
           <li key={category} className='categories-popup-option'>
-            <label key={allCategories[category]} className={s.category}>
+            <label className={s.category}>
               <input
                 type='checkbox'
                 checked={!!selectedCategories?.includes(category)}
@@ -30,6 +36,16 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories, onSet
             </label>
           </li>
         ))}
+        <li className='categories-popup-option' style={{ marginTop: '20px'}}>
+          <label className={s.category}>
+            <input
+              type='checkbox'
+              checked={showDeleted}
+              onChange={() => setShowDeleted(state => !state)}
+            />
+            <span>Show deleted categories</span>
+          </label>
+        </li>
       </ul>
     </div>
   )
