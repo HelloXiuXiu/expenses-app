@@ -11,7 +11,7 @@ function SignInButton({ style = {} }) {
 
   function handleSignOut() {
     startTransition(async () => {
-      document.cookie = 'selectedCategories=all; path=/; SameSite=Lax; Max-Age=0'
+      localStorage.removeItem('selectedCategories')
       const { errorMessage } = await signOutAction()
       if (!errorMessage) {
         router.push('/login')

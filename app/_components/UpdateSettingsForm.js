@@ -6,7 +6,7 @@ import s from '@/app/_styles/_components/UpdateSettingsForm.module.css'
 
 const DEFAULT_COLOR = '#EEEEEE'
 
-export default function UpdateSettingsForm({ initialSettings, cookiesCategories = '' }) {
+export default function UpdateSettingsForm({ initialSettings }) {
   const [form, setForm] = useState({
     username: initialSettings.username || '',
     currency: initialSettings.currency || '',
@@ -65,7 +65,8 @@ export default function UpdateSettingsForm({ initialSettings, cookiesCategories 
     startTransition(async () => {
       if (isCategoriesChanged(initialSettings.categories, form.categories)) {
         // check if any change in categories and update categories
-        updateCookies(initialSettings, form, cookiesCategories)
+        const selectedCategories = localStorage.getItem('selectedCategories')
+        updateLocalStorage(initialSettings, form, selectedCategories)
       }
 
       const res = await updateSettingsAction({
@@ -158,25 +159,26 @@ export default function UpdateSettingsForm({ initialSettings, cookiesCategories 
   )
 }
 
-function updateCookies(initialSettings, form, cookies) {
-  if (!cookies || cookies === 'all') return
+function updateLocalStorage(initialSettings, form, prevCategories) {
+  if (!prevCategories) return
 
-  let newCookies = ''
   const addedCategories = getAddedCategories(initialSettings.categories, form.categories)
   const deletedCategories = getDeletedCategories(initialSettings.categories, form.categories)
 
+  let newCategories = ''
+
   if (isNotEmptyObj(deletedCategories)) {
-    newCookies = cookies.split(',')
+    newCategories = prevCategories.split(',')
       .filter(category => !Object.keys(deletedCategories).includes(category))
       .join(',')
   }
 
   if (isNotEmptyObj(addedCategories)) {
-    newCookies = [...cookies.split(','), ...Object.keys(addedCategories)]
+    newCategories = [...prevCategories.split(','), ...Object.keys(addedCategories)]
       .join(',')
   }
 
-  document.cookie = `selectedCategories=${newCookies}; path=/; SameSite=Lax`
+  localStorage.setItem('selectedCategories', newCategories)
 }
 
 function isNotEmptyObj(obj) {

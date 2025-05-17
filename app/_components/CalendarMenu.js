@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { SelectCategoriesPopup } from '@/app/_components/SelectCategoriesPopup'
 import s from '@/app/_styles/_components/CalendarMenu.module.css'
 
-export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, allCategories }) => {
+export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, onSetSelectedCategories, allCategories }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
 
@@ -58,6 +58,7 @@ export const CalendarMenu = ({ sumWeek, sumMonth, selectedCategories, allCategor
             {isCategoriesOpen && (
               <SelectCategoriesPopup
                 selectedCategories={selectedCategories}
+                onSetSelectedCategories={onSetSelectedCategories}
                 allCategories={allCategories}
               />
             )}

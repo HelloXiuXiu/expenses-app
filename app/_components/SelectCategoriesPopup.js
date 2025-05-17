@@ -1,28 +1,17 @@
-import React, { useState, useTransition } from 'react'
-import { revalidatePage } from '@/lib/actions/actions'
 import s from '@/app/_styles/_components/SelectCategoriesPopup.module.css'
 
-export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => {
-  const [isPending, startTransition] = useTransition()
-  const [selected, setSelected] = useState(selectedCategories)
-
+export const SelectCategoriesPopup = ({ allCategories, selectedCategories, onSetSelectedCategories }) => {
   function handleToggleCategory(category) {
-    setSelected(selected => {
+    onSetSelectedCategories(selected => {
+      let newCategories = ''
       const arr = selected ? selected.split(',') : []
       if (arr.includes(category)) {
-        return arr.filter(item => item !== category).join(',')
+        newCategories = arr.filter(item => item !== category).join(',')
       } else {
-        return [...arr, category].join(',')
+        newCategories = [...arr, category].join(',')
       }
-    })
-  }
-
-  function saveCategories() {
-    if (selected === selectedCategories) return
-
-    startTransition(async () => {
-      document.cookie = `selectedCategories=${selected.replaceAll(' ', '_')}; path=/; SameSite=Lax`
-      await revalidatePage('/calendar/days')
+      localStorage.setItem('selectedCategories', newCategories)
+      return newCategories
     })
   }
 
@@ -34,7 +23,7 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => 
             <label key={allCategories[category]} className={s.category}>
               <input
                 type='checkbox'
-                checked={!!selected?.includes(category)}
+                checked={!!selectedCategories?.includes(category)}
                 onChange={() => handleToggleCategory(category)}
               />
               <span>{category}</span>
@@ -42,7 +31,6 @@ export const SelectCategoriesPopup = ({ allCategories, selectedCategories }) => 
           </li>
         ))}
       </ul>
-      <button className={s.button + ' categories-popup-button'} onClick={saveCategories}>save</button>
     </div>
   )
 }
