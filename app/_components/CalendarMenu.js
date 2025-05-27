@@ -66,19 +66,17 @@ export const CalendarMenu = ({
         <div id='menuContent' className={s.menuContent}>
           <div className={s.leftContent}>
             <div className={s.layoutToggle}>
-              <svg width='21' height='14' viewBox='0 0 21 14' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                <path d='M0 1H20.5' stroke='currentColor'/>
-                <path d='M0 7H20.5' stroke='currentColor'/>
-                <path d='M0 13H20.5' stroke='currentColor'/>
-              </svg>
+              <span className={s.line}></span>
+              <span className={s.line}></span>
+              <span className={s.line}></span>
             </div>
             <div className={s.sums}>
               <div style={{display: 'inline' }}>
-                <span className={s.sum}>{(+sumWeek).toFixed(2)}</span>
+                <span className={s.sum}>{formatNumber(+sumWeek)}</span>
                 <span className={s.sumLabel}>[ week ]</span>
               </div>
               <div style={{display: 'inline' }}>
-                <span className={s.sum}>{(+sumMonth).toFixed(2)}</span>
+                <span className={s.sum}>{formatNumber(+sumMonth)}</span>
                 <span className={s.sumLabel}>[ month ]</span>
               </div>
             </div>
@@ -110,4 +108,12 @@ export const CalendarMenu = ({
       </div>
     </>
   )
+}
+
+function formatNumber(num) {
+  if (num < 10000) return num.toFixed(2)
+  return new Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(num)
 }
