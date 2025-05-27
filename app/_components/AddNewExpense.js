@@ -28,7 +28,7 @@ export default function AddExpenseForm({ settings }) {
         description: form.description,
         category: form.category,
         currency: settings.currency,
-        date: new Date().toLocaleDateString('en-CA')
+        date: form.date, //new Date().toLocaleDateString('en-CA')
       })
 
       setStatus(res?.error ? 'error' : 'success')
@@ -54,6 +54,18 @@ export default function AddExpenseForm({ settings }) {
           onChange={handleChange}
           step='0.01'
           min='0'
+          className={s.input}
+        />
+      </div>
+
+      <div className={s.field}>
+        <label className={s.label}>Date 'yyyy-mm-dd'</label>
+        <input
+          type='text'
+          name='date'
+          defaultValue={new Date().toLocaleDateString('en-CA')}
+          value={form.date}
+          onChange={handleChange}
           className={s.input}
         />
       </div>
