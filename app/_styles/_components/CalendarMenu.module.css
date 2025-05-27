@@ -1,57 +1,79 @@
-.menuBox {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  font-size: 12px;
-  z-index: 999;
+.menuIndent {
+  height: 0;
+  transition: all 1s;
 }
 
 .openTrig {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  line-height: 18px;
   text-align: center;
+  color: var(--primary);
   cursor: pointer;
-  transform: translateY(8px);
   user-select: none;
+  z-index: 1;
 }
 
-.closeTrig {
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  text-align: center;
-  cursor: pointer;
-  transform: translateX(-50%);
-  user-select: none;
+.menuBox {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
+  max-height: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--background-00);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+  transition: all 1s;
 }
 
 .menuContent {
-  background-color: var(--background-03);
-  color: var(--background-00);
-  width: 100%;
-  height: 36px;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px 8px 20px;
+  background-color: var(--background-03);
+}
+
+.leftContent {
+  display: flex;
 }
 
 .layoutToggle {
   display: flex;
-  align-items: center;
   width: 50px;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .sums {
   display: flex;
-  gap: 45px;
-  align-items: center;
+  column-gap: 30px;
+  flex-wrap: wrap;
 }
 
 .sum {
-  display: inline-block;
+  display: inline;
   font-size: 14px;
   font-weight: 600;
   margin-right: 8px;
+  word-break: break-word;
+}
+
+.sumLabel {
+  white-space: nowrap;
+}
+
+.closeTrig {
+  cursor: pointer;
+  user-select: none;
 }
 
 .categories {
@@ -69,4 +91,40 @@
   background-color: var(--background-00);
   border-radius: 4px;
   margin-right: 8px;
+}
+
+.categoriesBox {
+  position: fixed;
+  right: 20px;
+  margin-top: 20px;
+  padding: 16px;
+  min-width: 200px;
+  background-color: var(--background-03);
+  color: var(--background-00);
+  border-radius: 4px;
+  border: 1px solid var(--color-primary);
+  z-index: 999;
+}
+
+@media (max-width: 750px) {
+  .menuContent {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 30px;
+  }
+
+  .leftContent {
+    grid-column: span 2;
+  }
+
+  .sums {
+    margin-left: auto;
+    justify-content: flex-end;
+    row-gap: 4px;
+    column-gap: 16px;
+    text-align: right;
+  }
+
+  .categories {
+    text-align: right;
+  }
 }
