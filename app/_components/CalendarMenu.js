@@ -36,9 +36,11 @@ export const CalendarMenu = ({
   function closeCategories(e) {
     // to make 'close on click outside' work
     // add .categories-popup-box to popup wrapper
+    // add .categories-close-icon to closing element
     const isInsidePopup = e.target.closest('.categories-popup-box')
+    const isCloseIcon = e.target.closest('.categories-close-icon')
 
-    if (isInsidePopup) {
+    if (isInsidePopup && !isCloseIcon) {
       window.addEventListener('click', closeCategories, { once: true, capture: true })
     } else {
       e.preventDefault()
@@ -92,18 +94,16 @@ export const CalendarMenu = ({
         </div>
 
         {isCategoriesOpen && (
-          <div
-            className={s.categoriesBox + ' categories-popup-box'}
+          <SelectCategoriesPopup
+            selectedCategories={selectedCategories}
+            onSetSelectedCategories={onSetSelectedCategories}
+            allCategories={allCategories}
+            showDeleted={showDeleted}
+            setShowDeleted={setShowDeleted}
+            popupClass='categories-popup-box'
+            closeClass='categories-close-icon'
             style={{ top: menuHeight + 40 + 'px'}}
-          >
-            <SelectCategoriesPopup
-              selectedCategories={selectedCategories}
-              onSetSelectedCategories={onSetSelectedCategories}
-              allCategories={allCategories}
-              showDeleted={showDeleted}
-              setShowDeleted={setShowDeleted}
-            />
-          </div>
+          />
         )}
       </div>
     </>

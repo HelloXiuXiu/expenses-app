@@ -1,0 +1,20 @@
+.header {
+  height: 20px;
+  width: 100%;
+  padding: 5px 8px;
+  background-color: var(--background-01);
+}
+
+.closeIcon {
+  width: 10px;
+  height: 10px;
+  background-color: #CECACA;
+  border-radius: 5px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.closeIcon:hover {
+  background-color: #BBB6B6;
+}

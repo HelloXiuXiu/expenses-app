@@ -103,19 +103,6 @@
   margin-right: 8px;
 }
 
-.categoriesBox {
-  position: fixed;
-  right: 20px;
-  margin-top: 20px;
-  padding: 16px;
-  min-width: 200px;
-  background-color: var(--background-03);
-  color: var(--background-00);
-  border-radius: 4px;
-  border: 1px solid var(--color-primary);
-  z-index: 999;
-}
-
 @media (max-width: 750px) {
   .menuContent {
     grid-template-columns: 1fr 1fr;
