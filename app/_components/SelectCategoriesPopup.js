@@ -64,7 +64,7 @@ export const SelectCategoriesPopup = ({
                 className={s.categoryContent}
                 style={{ opacity: !!selectedCategories?.includes(category) ? '1' :'0.2'}}
               >
-                <span>{category}</span>
+                <span className={s.categotyText}>{category}</span>
                 <span style={{ backgroundColor: allCategories[category] }} className={s.dot}></span>
               </div>
             </li>

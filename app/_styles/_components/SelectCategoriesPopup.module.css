@@ -2,7 +2,6 @@
   position: fixed;
   right: 20px;
   margin-top: 20px;
-  min-width: 280px;
   background-color: var(--background-00);
   color: var(--primary);
   font-size: 12px;
@@ -13,6 +12,7 @@
   overflow: hidden;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.15);
   z-index: 999;
+  animation: expand 2.4s cubic-bezier(.35,.26,.54,.97) forwards;
 }
 
 .noCategories {
@@ -29,6 +29,7 @@
   margin-bottom: 10px;
   border-bottom: 1px solid var(--border-light);
   user-select: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -36,9 +37,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
   padding: 2px 12px;
   transition: opacity 0.2s;
+}
+
+.categotyText {
+  max-width: calc(100% - 20px);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .dot {
@@ -62,9 +68,25 @@
   border-radius: 8px;
   text-align: center;
   user-select: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
 .button:hover {
   background-color: var(--border-light);
+}
+
+@keyframes expand {
+  0% {
+    width: 20px;
+    max-height: 0;
+  }
+  17% {
+    width: 300px;
+    max-height: 400px;
+  }
+  100% {
+    width: 300px;
+    max-height: 1000px;
+  }
 }

@@ -45,7 +45,10 @@ export const CalendarMenu = ({
     } else {
       e.preventDefault()
       e.stopPropagation()
-      setIsCategoriesOpen(false)
+
+      const modal = document.querySelector('.categories-popup-box')
+      modal.classList.add(s.categoriesClose)
+      modal.addEventListener('animationend', () => setIsCategoriesOpen(false), { once: true })
     }
   }
 
