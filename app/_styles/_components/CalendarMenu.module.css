@@ -1,23 +1,3 @@
-@keyframes collapse {
-  0% {
-    width: 300px;
-    max-height: 1000px;
-  }
-  50% {
-    width: 300px;
-    max-height: 50px;
-  }
-  100% {
-    width: 0;
-    max-height: 0;
-  }
-}
-
-.categoriesClose {
-  transform-origin: top right;
-  animation: collapse 0.4s forwards;
-}
-
 .menuIndent {
   height: 0;
   transition: all 1s;

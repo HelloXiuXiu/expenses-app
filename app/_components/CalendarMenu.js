@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { SelectCategoriesPopup } from '@/app/_components/SelectCategoriesPopup'
+import { AnimatedPopup } from '@/app/_components/AnimatedPopup'
 import s from '@/app/_styles/_components/CalendarMenu.module.css'
 
 export const CalendarMenu = ({
@@ -27,30 +28,6 @@ export const CalendarMenu = ({
   // not using sticky as it blocks next.js cache on history.back()
   const menuIndentStyle = isOpen ? { height: menuHeight + 'px' } : {}
   const menuStyle = isOpen ? { maxHeight: menuHeight + 'px', pointerEvents: 'auto' } : {}
-
-  function openCategories(e) {
-    setIsCategoriesOpen(true)
-    window.addEventListener('click', closeCategories, { once: true, capture: true })
-  }
-
-  function closeCategories(e) {
-    // to make 'close on click outside' work
-    // add .categories-popup-box to popup wrapper
-    // add .categories-close-icon to closing element
-    const isInsidePopup = e.target.closest('.categories-popup-box')
-    const isCloseIcon = e.target.closest('.categories-close-icon')
-
-    if (isInsidePopup && !isCloseIcon) {
-      window.addEventListener('click', closeCategories, { once: true, capture: true })
-    } else {
-      e.preventDefault()
-      e.stopPropagation()
-
-      const modal = document.querySelector('.categories-popup-box')
-      modal.classList.add(s.categoriesClose)
-      modal.addEventListener('animationend', () => setIsCategoriesOpen(false), { once: true })
-    }
-  }
 
   function handleResize() {
     // get an actial menu size to enable smooth animation
@@ -86,27 +63,32 @@ export const CalendarMenu = ({
               </div>
             </div>
           </div>
-          <div className={s.closeTrig} onClick={() => setIsOpen(false)}>[ close ]</div>
+          <div className={`${s.closeTrig} clickable`} onClick={() => setIsOpen(false)}>[ close ]</div>
           <div
             className={s.categories}
             style={{ opacity: isCategoriesOpen ? '0.5' : '1'}}
-            onClick={openCategories}
+            onClick={() => setIsCategoriesOpen(true)}
           >
             {selectedLength}/{categoriesLenth} categories
           </div>
         </div>
 
         {isCategoriesOpen && (
-          <SelectCategoriesPopup
-            selectedCategories={selectedCategories}
-            onSetSelectedCategories={onSetSelectedCategories}
-            allCategories={allCategories}
-            showDeleted={showDeleted}
-            setShowDeleted={setShowDeleted}
-            popupClass='categories-popup-box'
-            closeClass='categories-close-icon'
-            style={{ top: menuHeight + 40 + 'px'}}
-          />
+          <AnimatedPopup
+            maxHeight={1000}
+            width={300}
+            clickableClass='clickable'
+            onSetIsOpen={setIsCategoriesOpen}
+            styles={{ top: menuHeight + 40 + 20 + 'px', right: '20px' }}
+          >
+            <SelectCategoriesPopup
+              selectedCategories={selectedCategories}
+              onSetSelectedCategories={onSetSelectedCategories}
+              allCategories={allCategories}
+              showDeleted={showDeleted}
+              setShowDeleted={setShowDeleted}
+            />
+          </AnimatedPopup>
         )}
       </div>
     </>

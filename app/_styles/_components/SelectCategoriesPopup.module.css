@@ -1,28 +1,21 @@
 .categories {
-  position: fixed;
-  right: 20px;
-  margin-top: 20px;
   background-color: var(--background-00);
   color: var(--primary);
   font-size: 12px;
   line-height: 15px;
   font-weight: 500;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.15);
-  z-index: 999;
-  animation: expand 2.4s cubic-bezier(.35,.26,.54,.97) forwards;
 }
 
 .noCategories {
-  margin-top: 40px;
+  padding-top: 40px;
   text-align: center;
   opacity: 0.2;
 }
 
 .categoriesList {
-  margin-top: 14px;
+  padding-top: 14px;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 .category {
@@ -74,19 +67,4 @@
 
 .button:hover {
   background-color: var(--border-light);
-}
-
-@keyframes expand {
-  0% {
-    width: 20px;
-    max-height: 0;
-  }
-  17% {
-    width: 300px;
-    max-height: 400px;
-  }
-  100% {
-    width: 300px;
-    max-height: 1000px;
-  }
 }

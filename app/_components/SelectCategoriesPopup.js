@@ -1,4 +1,3 @@
-import PopupHeader from '@/app/_components/PopupHeader'
 import s from '@/app/_styles/_components/SelectCategoriesPopup.module.css'
 
 export const SelectCategoriesPopup = ({
@@ -7,8 +6,6 @@ export const SelectCategoriesPopup = ({
   onSetSelectedCategories,
   showDeleted,
   setShowDeleted,
-  popupClass,
-  closeClass
 }) => {
   const isNoCategories = !allCategories || !Object.keys(allCategories).length
   const isAllSelected = Object.keys(allCategories).join(',') === selectedCategories
@@ -46,8 +43,7 @@ export const SelectCategoriesPopup = ({
   }
 
   return (
-    <div className={`${s.categories} ${popupClass}`}>
-      <PopupHeader closeClass={closeClass} />
+    <div className={s.categories}>
       {isNoCategories ? (
         <div className={s.noCategories}>
           [ no categories created ]
