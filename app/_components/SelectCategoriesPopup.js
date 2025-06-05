@@ -8,8 +8,10 @@ export const SelectCategoriesPopup = ({
   setShowDeleted,
 }) => {
   const isNoCategories = !allCategories || !Object.keys(allCategories).length
-  const isAllSelected = Object.keys(allCategories).join(',') === selectedCategories
   const isNoSelected = selectedCategories === ''
+  const isAllSelected =
+    Object.keys(allCategories).sort().join(',') ===
+    selectedCategories.split(',').sort().join()
 
   function handleToggleCategory(category) {
     onSetSelectedCategories(selected => {
