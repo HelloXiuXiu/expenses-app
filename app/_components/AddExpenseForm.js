@@ -4,44 +4,34 @@ import { useState, useTransition } from 'react'
 import { addExpenseAction } from '@/lib/actions/actions'
 import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
-const initialFormState = {
-  amount: '',
-  description: '',
-  date: new Date().toLocaleDateString('en-CA'),
-}
-
 export function AddExpenseForm({ settings }) {
-  const categories = settings.categories
-  const [form, setForm] = useState({
-    ...initialFormState,
-    category: Object.keys(categories)[0] || ''
-  })
-
   const [isPending, startTransition] = useTransition()
   const [status, setStatus] = useState(null)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
-  }
+  const categories = settings.categories
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const form = e.target
+
+    const amount = parseFloat(form.elements.amount.value)
+    const description = form.elements.description.value
+    const category = form.elements.category.value
+    const date = form.elements.date.value
+    const currency = settings.currency
+
     startTransition(async () => {
       const res = await addExpenseAction({
-        amount: parseFloat(form.amount),
-        description: form.description,
-        category: form.category,
-        currency: settings.currency,
-        date: form.date, //new Date().toLocaleDateString('en-CA')
+        amount,
+        description,
+        category,
+        date,
+        currency
       })
 
       setStatus(res?.error ? 'error' : 'success')
 
-      if (!res?.error) setForm({
-        ...initialFormState,
-        category: Object.keys(categories)[0] || ''
-      })
+      if (!res?.error) form.reset()
     })
   }
 
@@ -53,8 +43,6 @@ export function AddExpenseForm({ settings }) {
         <input
           type='number'
           name='amount'
-          value={form.amount}
-          onChange={handleChange}
           step='0.01'
           min='0'
           className={s.input}
@@ -66,8 +54,7 @@ export function AddExpenseForm({ settings }) {
         <input
           type='text'
           name='date'
-          value={form.date}
-          onChange={handleChange}
+          defaultValue={new Date().toLocaleDateString('en-CA')}
           className={s.input}
         />
       </div>
@@ -76,8 +63,6 @@ export function AddExpenseForm({ settings }) {
         <label className={s.label}>Description</label>
         <input
           name='description'
-          value={form.description}
-          onChange={handleChange}
           className={s.input}
         />
       </div>
@@ -86,8 +71,6 @@ export function AddExpenseForm({ settings }) {
         <label className={s.label}>Category</label>
         <select
           name='category'
-          value={form.category}
-          onChange={handleChange}
           className={s.input}
         >
           {Object.entries(categories).map(([title]) => (
