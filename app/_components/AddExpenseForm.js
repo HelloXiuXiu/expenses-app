@@ -2,14 +2,19 @@
 
 import { useState, useTransition } from 'react'
 import { addExpenseAction } from '@/lib/actions/actions'
-import s from '@/app/_styles/_components/AddNewExpense.module.css'
+import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
-export default function AddExpenseForm({ settings }) {
+const initialFormState = {
+  amount: '',
+  description: '',
+  date: new Date().toLocaleDateString('en-CA'),
+}
+
+export function AddExpenseForm({ settings }) {
   const categories = settings.categories
   const [form, setForm] = useState({
-    amount: '',
-    description: '',
-    category: Object.keys(categories)[0] || '',
+    ...initialFormState,
+    category: Object.keys(categories)[0] || ''
   })
 
   const [isPending, startTransition] = useTransition()
@@ -33,18 +38,16 @@ export default function AddExpenseForm({ settings }) {
 
       setStatus(res?.error ? 'error' : 'success')
 
-      if (!res?.error) {
-        setForm({
-          amount: '',
-          description: '',
-          category: Object.keys(categories)[0] || '',
-        })
-      }
+      if (!res?.error) setForm({
+        ...initialFormState,
+        category: Object.keys(categories)[0] || ''
+      })
     })
   }
 
   return (
     <form onSubmit={handleSubmit} className={s.form}>
+      <span>[  create new expense  ]</span>
       <div className={s.field}>
         <label className={s.label}>Amount ({settings.currency})</label>
         <input
@@ -63,7 +66,6 @@ export default function AddExpenseForm({ settings }) {
         <input
           type='text'
           name='date'
-          defaultValue={new Date().toLocaleDateString('en-CA')}
           value={form.date}
           onChange={handleChange}
           className={s.input}
