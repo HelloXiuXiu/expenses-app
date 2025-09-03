@@ -2,19 +2,20 @@
 
 import { useTransition } from 'react'
 import { deleteExpenseAction } from '@/lib/actions/actions'
+import { Button } from '@/app/_components/ui/Button'
 
 export const DeleteExpense = ({ id, date }) => {
   const [isPending, startTransition] = useTransition()
 
-  function handleRemove() {
+  function handleDelete() {
     startTransition(async () => {
       const res = await deleteExpenseAction(id, date)
     })
   }
 
   return (
-    <button onClick={handleRemove} disabled={isPending}>
-      Remove
-    </button>
+    <Button.Small onClick={handleDelete} disabled={isPending}>
+      delete
+    </Button.Small>
   )
 }

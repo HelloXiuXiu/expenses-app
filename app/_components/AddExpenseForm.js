@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { addExpenseAction } from '@/lib/actions/actions'
+import { Button } from '@/app/_components/ui/Button'
 import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
 // TO-DO handle no categories case
@@ -93,9 +94,9 @@ export function AddExpenseForm({ settings }) {
         
         <div className={s.relative} style={{ display: 'flex'}}>
           {errorMsg ? <div className={s.errorMsg}><span></span>{errorMsg}</div> : null}
-          <button type='submit' disabled={isPending} className={s.button}>
+          <Button.Large type='submit' disabled={isPending} style={{ margin: '45px 16px 16px 16px' }}>
             {isPending ? 'adding...' : '+ add expense +'}
-          </button>
+          </Button.Large>
         </div>
 
         {status === 'success' && <p className={s.success}>Expense added!</p>}
@@ -104,4 +105,3 @@ export function AddExpenseForm({ settings }) {
     </>
   )
 }
-

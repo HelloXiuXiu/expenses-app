@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import PopupHeader from '@/app/_components/PopupHeader'
-import s from '@/app/_styles/_components/AnimatedPopup.module.css'
+import s from '@/app/_styles/_components/animation/AnimatedPopup.module.css'
 
 const popupClass = 'animated-popup-box'
 const closeClass = 'animated-popup-close-icon'

@@ -1,0 +1,30 @@
+.button {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-weight: 500;
+  font-size: 13px;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.large {
+  background-color: var(--border-light);
+  padding: 16px;
+  width: 100%;
+}
+
+.large:hover {
+  opacity: 0.6;
+}
+
+.small {
+  background-color: var(--background-00);
+  padding: 4px 18px;
+}
+
+.small:hover {
+   background-color: var(--border-light);
+}

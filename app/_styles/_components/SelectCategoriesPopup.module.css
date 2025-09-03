@@ -51,19 +51,3 @@
   display: flex;
   gap: 4px;
 }
-
-.button {
-  flex-grow: 1;
-  padding: 4px 14px;
-  background-color: var(--background-00);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  text-align: center;
-  user-select: none;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: var(--border-light);
-}

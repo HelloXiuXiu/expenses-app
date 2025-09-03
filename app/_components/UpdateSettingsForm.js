@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { updateSettingsAction } from '@/lib/actions/actions'
+import { Button } from '@/app/_components/ui/Button'
 import s from '@/app/_styles/_components/UpdateSettingsForm.module.css'
 
 const DEFAULT_COLOR = '#EEEEEE'
@@ -149,9 +150,9 @@ export default function UpdateSettingsForm({ initialSettings }) {
         </div>
       </div>
 
-      <button type='submit' disabled={isPending || !isDataChanged(initialSettings, form)} className={s.button}>
+      <Button.Large type='submit' disabled={isPending || !isDataChanged(initialSettings, form)}>
         {isPending ? 'Saving...' : 'Save Settings'}
-      </button>
+      </Button.Large>
 
       {status === 'success' && <p className={s.success}>Settings saved!</p>}
       {status === 'error' && <p className={s.error}>Something went wrong.</p>}

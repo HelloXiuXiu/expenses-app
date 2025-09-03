@@ -3,9 +3,9 @@
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { signOutAction } from '@/lib/actions/actions'
-import s from '@/app/_styles/_components/SignInButton.module.css'
+import { Button } from '@/app/_components/ui/Button'
 
-function SignInButton({ style = {} }) {
+function SignOutButton() {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -22,11 +22,11 @@ function SignInButton({ style = {} }) {
   }
 
   return (
-    <button className={s.button} style={style} onClick={handleSignOut} disabled={isPending} >
+    <Button.Large onClick={handleSignOut} disabled={isPending} >
       <span>{isPending ? '...signing out' : 'Sign Out'}</span>
-    </button>
+    </Button.Large>
   )
 }
 
-export default SignInButton
+export default SignOutButton
 

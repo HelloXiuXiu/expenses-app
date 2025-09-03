@@ -9,6 +9,7 @@
   gap: 4px;
   padding: 8px var(--side-padding);
   overflow: hidden;
+  cursor: pointer;
   transition: background-color 0.2s;
 }
 
@@ -28,16 +29,6 @@
 .day.open {
   transform: translateY(0);
   background-color: unset !important;
-}
-
-.day.open::before {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0; 
-  height: 100px;
-  background-color: red;
 }
 
 .day.open .amount {

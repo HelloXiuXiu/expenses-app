@@ -49,7 +49,7 @@ export const DayTodayEmpty = ({ settings }) => {
   const today = new Date().toLocaleDateString('en-GB')
 
   return (
-    <Link className={s.day + ' day'} href={`/day/${today.replaceAll('-','')}`}>
+    <div className={s.day}>
       <div className={s.date}>{today.split('/').slice(0, 2).join('/')}</div>
       <div className={s.amountWrap}>
         <div className={s.amount}>0</div>
@@ -58,7 +58,7 @@ export const DayTodayEmpty = ({ settings }) => {
       <div className={s.riteSide}>
         {getWeekday(new Date().toLocaleDateString('en-US'))}
       </div>
-    </Link>
+    </div>
   )
 }
 

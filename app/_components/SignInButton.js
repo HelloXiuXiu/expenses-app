@@ -3,9 +3,9 @@
 import { useTransition } from 'react'
 import Image from 'next/image'
 import { signInAction } from '@/lib/actions/actions'
-import s from '@/app/_styles/_components/SignInButton.module.css'
+import { Button } from '@/app/_components/ui/Button'
 
-function SignInButton({ style }) {
+function SignInButton() {
   const [isPending, startTransition] = useTransition()
 
   function handleLogin(provider) {
@@ -23,19 +23,19 @@ function SignInButton({ style }) {
   }
 
   return (
-    <button
-      className={s.button}
+    <Button.Large
       disabled={isPending}
       onClick={() => handleLogin('github')}
-    >
-       <Image
+      style={{ maxWidth: '200px', display: 'flex', gap: '4px', justifyContent: 'center', alignItems: 'center' }}
+    > 
+      <Image
         src="/static/github.svg"
         width={24}
         height={24}
         alt='Github logo'
        />
       <span>{isPending ? '...logging in' : 'Signin with GitHub'}</span>
-    </button>
+    </Button.Large>
   )
 }
 

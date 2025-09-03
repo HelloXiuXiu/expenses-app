@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { getDayData } from '@/lib/services/data-service'
+import { Button } from '@/app/_components/ui/Button'
 import { DayExpense } from '@/app/_components/DayExpense'
 import s from '@/app/_styles/_components/DayInfo.module.css'
 
@@ -55,7 +56,9 @@ export const DayInfo = ({ day, categories }) => {
           <DayExpense day={day} categories={categories} key={day.id} />
         ))}
       </ul>
-      <button> Add exp </button>
+      <div className={s.button}>
+        <Button.Large>+ add new +</Button.Large>
+      </div>
     </div>
   )
 }

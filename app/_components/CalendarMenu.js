@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { SelectCategoriesPopup } from '@/app/_components/SelectCategoriesPopup'
-import { AnimatedPopup } from '@/app/_components/AnimatedPopup'
+import { AnimatedPopup } from '@/app/_components/animation/AnimatedPopup'
 import s from '@/app/_styles/_components/CalendarMenu.module.css'
 
 export const CalendarMenu = ({

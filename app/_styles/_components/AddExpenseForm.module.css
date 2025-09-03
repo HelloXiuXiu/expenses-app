@@ -62,21 +62,6 @@
   border-radius: 8px;
 }
 
-.button {
-  width: 100%;
-  padding: 16px;
-  margin: 16px;
-  margin-top: 45px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background-color: var(--border-light);
-  cursor: pointer;
-}
-
-.button:hover {
-  opacity: 0.6;
-}
-
 .errorMsg {
   position: absolute;
   top: -16px;

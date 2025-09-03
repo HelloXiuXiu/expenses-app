@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AnimatedPopup } from '@/app/_components/AnimatedPopup'
+import { AnimatedPopup } from '@/app/_components/animation/AnimatedPopup'
 import { AddExpenseForm } from '@/app/_components/AddExpenseForm'
 import s from '@/app/_styles/_components/NewExpense.module.css'
 

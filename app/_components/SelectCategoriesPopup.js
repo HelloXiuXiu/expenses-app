@@ -1,3 +1,4 @@
+import { Button } from '@/app/_components/ui/Button'
 import s from '@/app/_styles/_components/SelectCategoriesPopup.module.css'
 
 export const SelectCategoriesPopup = ({
@@ -70,23 +71,21 @@ export const SelectCategoriesPopup = ({
         </ul>
       )}
       <div className={s.buttons}>
-        <button
-          className={s.button}
-          style={{ opacity: showDeleted ? '1' : '0.4'}}
+        <Button.Small
+          style={{ opacity: showDeleted ? '1' : '0.4', flexGrow: 1}}
           onClick={() => setShowDeleted(state => !state)}
         >
           <span style={{ opacity: showDeleted ? '1' : '0.6'}}>
             show deleted categories
           </span>
-        </button>
-        <button
-          className={s.button}
+        </Button.Small>
+        <Button.Small
           onClick={handleRightButtonClick}
           disabled={isNoCategories}
-          style={{ minWidth: '80px' }}
+          style={{ minWidth: '90px', flexGrow: 1 }}
         >
           {isAllSelected ? 'hide all' : isNoSelected ? 'show all' : 'clear all'}
-        </button> 
+        </Button.Small> 
       </div>
     </div>
   )
