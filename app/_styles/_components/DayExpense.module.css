@@ -1,0 +1,40 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 4px;
+  padding: 12px var(--side-padding);
+  border-top: 1px solid var(--border);
+}
+
+.wrap:last-of-type {
+  border-bottom: 1px solid var(--border);
+}
+
+.dot {
+  margin-top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.amount {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.descr {
+  font-size: 12px;
+  opacity: 0.4;
+}
+
+.constrols {
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wrap:hover .constrols {
+  opacity: 1;
+}

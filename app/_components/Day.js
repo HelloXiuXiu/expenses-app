@@ -1,37 +1,44 @@
 'use client'
 
-import Link from 'next/link'
+import { useState } from 'react'
+import { DayInfo } from '@/app/_components/DayInfo'
 import s from '@/app/_styles/_components/Day.module.css'
 
 export const Day = ({ day, settings }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const maxCategories = day.categories?.length > 50 ? 49 : day.categories?.length
 
   return (
-    <Link className={s.day + ' day'} href={`/day/${day.date.replaceAll('-','')}`}>
-      <div className={s.date}>{day.date.split('-').slice(-2).reverse().join('/')}</div>
-      <div className={s.amountWrap}>
-        <div className={s.amount}>{+day.amount[settings.currency].toFixed(2)}</div>
-        <div className={s.currency}>{settings.currency}</div>
-      </div>
-      <div className={s.riteSide}>
-        {getWeekday(day.date)}
-        <div className={s.categories}>
-          {day.categories?.slice(0, maxCategories).map(category => (
-            <div
-              key={category}
-              className={s.category}
-              style={{
-                backgroundColor: settings.categories[category] ||
-                settings.deleted_categories[category]
-              }}
-            ></div>
-          ))}
-          <div className={s.categotyCount}>
-            {day.categories?.length > maxCategories + 1 && '...'}
+    <div className={s.dayWrap} onClick={() => setIsOpen((state) => !state)}>
+      <div className={`${s.day} ${isOpen ? s.open : ''}`}> 
+        <div className={s.date}>{day.date.split('-').slice(-2).reverse().join('/')}</div>
+        <div className={s.amountWrap}>
+          <div className={s.amount}>{+day.amount[settings.currency].toFixed(2)}</div>
+          <div className={s.currency}>{settings.currency}</div>
+        </div>
+        <div className={s.riteSide}>
+          {getWeekday(day.date)}
+          <div className={s.categories}>
+            {day.categories?.slice(0, maxCategories).map(category => (
+              <div
+                key={category}
+                className={s.category}
+                style={{
+                  backgroundColor: settings.categories[category] ||
+                  settings.deleted_categories[category]
+                }}
+              ></div>
+            ))}
+            <div className={s.categotyCount}>
+              {day.categories?.length > maxCategories + 1 && '...'}
+            </div>
           </div>
         </div>
       </div>
-    </Link>
+      {isOpen && (
+        <DayInfo day={day} categories={{...settings.categories, ...settings.deleted_categories}} />
+      )}
+    </div>
   )
 }
 

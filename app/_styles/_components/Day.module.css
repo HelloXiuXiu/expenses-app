@@ -1,10 +1,13 @@
+.dayWrap {
+  border-bottom: 1px solid var(--primary);
+}
+
 .day {
   position: relative;
   display: flex;
   height: 108px;
   gap: 4px;
   padding: 8px var(--side-padding);
-  border-bottom: 1px solid var(--primary);
   overflow: hidden;
   transition: background-color 0.2s;
 }
@@ -19,6 +22,29 @@
 }
 
 .day:hover .currency {
+  transform: translateY(-20px);
+}
+
+.day.open {
+  transform: translateY(0);
+  background-color: unset !important;
+}
+
+.day.open::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; 
+  height: 100px;
+  background-color: red;
+}
+
+.day.open .amount {
+  transform: translateY(0);
+}
+
+.day.open .currency {
   transform: translateY(-20px);
 }
 
