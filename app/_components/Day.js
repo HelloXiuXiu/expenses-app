@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import s from '@/app/_styles/_components/Day.module.css'
 
@@ -34,17 +36,20 @@ export const Day = ({ day, settings }) => {
 }
 
 export const DayTodayEmpty = ({ settings }) => {
-  const today = new Date().toLocaleDateString('en-CA')
+  // TO-DO: stabilise the output of toLocaleDateString, as it can be different
+  // between implementations
+  // TO-DO: call this function only in the browser, as it can be different for the server
+  const today = new Date().toLocaleDateString('en-GB')
 
   return (
     <Link className={s.day + ' day'} href={`/day/${today.replaceAll('-','')}`}>
-      <div className={s.date}>{today.split('-').slice(-2).reverse().join('/')}</div>
+      <div className={s.date}>{today.split('/').slice(0, 2).join('/')}</div>
       <div className={s.amountWrap}>
         <div className={s.amount}>0</div>
         <div className={s.currency}>rsd</div>
       </div>
       <div className={s.riteSide}>
-        {getWeekday(today)}
+        {getWeekday(new Date().toLocaleDateString('en-US'))}
       </div>
     </Link>
   )
@@ -52,7 +57,7 @@ export const DayTodayEmpty = ({ settings }) => {
 
 export const DayEmpty = ({ day }) => {
   return (
-    <div className={s.day} style={{ opacity: '0.2', pointerEvents: 'none' }}>
+    <div className={s.day} style={{ opacity: '0.1', pointerEvents: 'none' }}>
       <div className={s.date}>{day.split('-').slice(-2).reverse().join('/')}</div>
       <div className={s.amountWrap}></div>
       <div className={s.riteSide}>
@@ -63,5 +68,5 @@ export const DayEmpty = ({ day }) => {
 }
 
 function getWeekday(yyyyddmm) {
-  return new Date(yyyyddmm).toLocaleDateString('en-US', { weekday: 'long' })
+  return new Date(yyyyddmm).toLocaleDateString('en-GB', { weekday: 'long' })
 }

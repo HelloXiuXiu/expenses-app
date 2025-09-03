@@ -86,6 +86,7 @@ function getNextDays(n) {
 
 function isToday(date) {
   if (!date) return true
+  // TO-DO make more reliable comparison
   return new Date().toLocaleDateString('en-CA') === date
 }
 

@@ -1,28 +1,105 @@
 .form {
-  background-color: var(--background-00);
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  border-top: 1px solid var(--border-light);
 }
 
-.button {
-  height: 40px;
-  cursor: pointer;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.label {
-  font-weight: 700;
+.title {
+  margin: 26px 16px;
+  text-align: center;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .input {
-  height: 30px;
-  padding: 4px;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.input.description::placeholder {
+  opacity: 0.2;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--primary);
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.select {
+  padding-right: 30px;
+  text-transform: capitalize;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+  cursor: pointer;
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.button {
+  width: 100%;
+  padding: 16px;
+  margin: 16px;
+  margin-top: 45px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--border-light);
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.6;
+}
+
+.errorMsg {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px;
+  background-color: var(--background-00);
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.errorMsg::after {
+  content: ' ';
+  position: absolute;
+  bottom: -7px; /* move below border */
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 14px;
+  height: 14px;
+  background: white;
+  box-shadow:
+    1px 0 0 0 #e0e0e0,    /* right */
+    0 1px 0 0 #e0e0e0;    /* bottom */
+  border-bottom-right-radius: 3px;
 }
 
