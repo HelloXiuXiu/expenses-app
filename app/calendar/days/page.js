@@ -6,6 +6,8 @@ export default async function CalendarDaysPage() {
   const settings = await getUserSettings()
 
   return (
-    <DayList data={data} settings={settings} />
+    <div style={{ position: 'relative' }}>
+      <DayList data={data} settings={settings} />
+    </div>
   )
 }

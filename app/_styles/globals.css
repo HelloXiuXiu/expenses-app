@@ -25,6 +25,8 @@
   --border: #E5E5E5;
   --border-light: #F9F9F9;
 
+  --overlay: rgba(110, 101, 101, 0.20);
+
   --primary: #000000;
   --primary-hover: #F0F0F0;
 }

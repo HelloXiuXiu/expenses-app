@@ -3,9 +3,10 @@
 import { DeleteExpense } from '@/app/_components/DeleteExpense'
 import s from '@/app/_styles/_components/DayExpense.module.css'
 
-export const DayExpense = ({ day, categories }) => {
+export const DayExpense = ({ day, categories, selectedCategories }) => {
+  const isSelected = selectedCategories.includes(day.category)
   return (
-    <div className={s.wrap}>
+    <div className={s.wrap} style={{ opacity: isSelected ? 1 : 0.25 }} >
       <div className={s.dot} style={{ backgroundColor: categories[day.category] }}></div>
       <div>
         <p className={s.amount}>{day.amount}</p>

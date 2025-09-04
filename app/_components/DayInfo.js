@@ -6,7 +6,7 @@ import { Button } from '@/app/_components/ui/Button'
 import { DayExpense } from '@/app/_components/DayExpense'
 import s from '@/app/_styles/_components/DayInfo.module.css'
 
-export const DayInfo = ({ day, categories }) => {
+export const DayInfo = ({ day, selectedCategories, categories }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
@@ -53,7 +53,12 @@ export const DayInfo = ({ day, categories }) => {
     <div className={s.wrap}>
       <ul>
         {data?.map(day => (
-          <DayExpense day={day} categories={categories} key={day.id} />
+          <DayExpense
+            day={day}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            key={day.id}
+          />
         ))}
       </ul>
       <div className={s.button}>
@@ -62,5 +67,3 @@ export const DayInfo = ({ day, categories }) => {
     </div>
   )
 }
-
-

@@ -1,5 +1,7 @@
 .dayWrap {
+  position: relative;
   border-bottom: 1px solid var(--primary);
+  background-color: var(--background-00);
 }
 
 .day {
@@ -26,17 +28,25 @@
   transform: translateY(-20px);
 }
 
-.day.open {
-  transform: translateY(0);
-  background-color: unset !important;
+.overlay {
+  cursor: pointer;
+  background: var(--overlay);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  animation: show 0.6s forwards;
 }
 
-.day.open .amount {
-  transform: translateY(0);
-}
-
-.day.open .currency {
-  transform: translateY(-20px);
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .date {
@@ -108,4 +118,24 @@
 .categotyCount {
   font-size: 12px;
   line-height: 7px;
+}
+
+.day.open {
+  transform: translateY(0);
+  background-color: unset !important;
+}
+
+.day.open:hover .amount,
+.day.open .date {
+  transform: translateY(20px);
+}
+
+.day.open:hover .currency {
+  transform: translateY(0);
+}
+
+.day.open,
+.day.open .amountWrap,
+.day.open .amount {
+  overflow: visible;
 }

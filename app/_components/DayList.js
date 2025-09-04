@@ -68,7 +68,9 @@ export const DayList = ({ data, settings }) => {
       />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
       {!isToday(groupedSelected[0]?.date) && <DayTodayEmpty settings={settings} />}
-      {groupedSelected.map(day => <Day key={day.date} day={day} settings={settings} />)}
+      {groupedSelected.map(day => (
+        <Day key={day.date} day={day} settings={settings} selectedCategories={selectedCategories} />
+      ))}
       {noCategories && (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
       )}
