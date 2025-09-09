@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { DayInfo } from '@/app/_components/DayInfo'
 import s from '@/app/_styles/_components/Day.module.css'
 
+// TO-DO handle the case when user removes all the expenses or hides all the categories
+// day should stay opened and show 0
 export const Day = ({ day, settings, selectedCategories }) => {
   const [isOpen, setIsOpen] = useState(false)
   const maxCategories = day.categories?.length > 50 ? 49 : day.categories?.length

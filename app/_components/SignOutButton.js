@@ -3,6 +3,7 @@
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { signOutAction } from '@/lib/actions/actions'
+import { clearAllDaysCache } from '@/lib/cache/dayCache'
 import { Button } from '@/app/_components/ui/Button'
 
 function SignOutButton() {
@@ -12,6 +13,7 @@ function SignOutButton() {
   function handleSignOut() {
     startTransition(async () => {
       localStorage.removeItem('selectedCategories')
+      clearAllDaysCache()
       const { errorMessage } = await signOutAction()
       if (!errorMessage) {
         router.push('/login')
@@ -29,4 +31,3 @@ function SignOutButton() {
 }
 
 export default SignOutButton
-

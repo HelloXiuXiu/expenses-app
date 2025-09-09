@@ -4,42 +4,44 @@ import { useState, useEffect } from 'react'
 import { getDayData } from '@/lib/services/data-service'
 import { Button } from '@/app/_components/ui/Button'
 import { DayExpense } from '@/app/_components/DayExpense'
+import { getDayCache, setDayCache } from '@/lib/cache/dayCache'
 import s from '@/app/_styles/_components/DayInfo.module.css'
 
 export const DayInfo = ({ day, selectedCategories, categories }) => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState(null)
+
+  // TO-DO change update trigger and use optimistic state 
+  // to remove an expense
+  const total = day.amount.RSD
 
   useEffect(() => {
+    const cachedData = getDayCache(day.date)
+    if (cachedData) {
+      setData(cachedData)
+      return
+    }
+
+    setLoading(true)
     const controller = new AbortController()
-    const date = day.date
 
     const fetchData = async () => {
       try {
-        const res = await getDayData(day.date, { signal: controller.signal });
-        setData(res);
+        const res = await getDayData(day.date, { signal: controller.signal })
+        setDayCache(day.date, res)
+        setData(res)
       } catch (err) {
-        if (err.name === "AbortError") return
-        console.error("Error fetching day data:", err)
+        // TO-DO handle error case
+        if (err.name === 'AbortError') return
+        console.error('Error fetching day data:', err)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-
+    }
     fetchData()
 
     return () => controller.abort()
-  }, [day.date])
-
-  let sum =  {}
-
-  data?.forEach(item => {
-    if (!sum[item.currency]) {
-      sum[item.currency] = item.amount
-    } else {
-      sum[item.currency] += item.amount
-    }
-  })
+  }, [day.date, total])
 
   if (loading) return (
     <div>...Loading</div>
@@ -54,10 +56,10 @@ export const DayInfo = ({ day, selectedCategories, categories }) => {
       <ul>
         {data?.map(day => (
           <DayExpense
-            day={day}
-            selectedCategories={selectedCategories}
-            categories={categories}
             key={day.id}
+            day={day}
+            color={categories[day.category]}
+            isSelected={selectedCategories.includes(day.category)}
           />
         ))}
       </ul>
