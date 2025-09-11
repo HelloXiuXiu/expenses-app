@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import { getDayData } from '@/lib/services/data-service'
 import { Button } from '@/app/_components/ui/Button'
+import { Loader } from '@/app/_components/ui/Loader'
 import { DayExpense } from '@/app/_components/DayExpense'
 import { getDayCache, setDayCache } from '@/lib/cache/dayCache'
 import s from '@/app/_styles/_components/DayInfo.module.css'
 
-export const DayInfo = ({ day, selectedCategories, categories }) => {
-  const [loading, setLoading] = useState(false)
+export const DayInfo = ({ day, selectedCategories, categories, loading, setLoading }) => {
+  const [error, setError] = useState('')
   const [data, setData] = useState(null)
 
   // TO-DO change update trigger and use optimistic state 
@@ -33,6 +34,7 @@ export const DayInfo = ({ day, selectedCategories, categories }) => {
       } catch (err) {
         // TO-DO handle error case
         if (err.name === 'AbortError') return
+        setError(err)
         console.error('Error fetching day data:', err)
       } finally {
         setLoading(false)
@@ -44,12 +46,14 @@ export const DayInfo = ({ day, selectedCategories, categories }) => {
   }, [day.date, total])
 
   if (loading) return (
-    <div>...Loading</div>
+    <Loader />
   )
 
-  if (!data) return (
-    <div>Day not found</div>
+  if (error) return (
+    <div>Day not found. Check your internet connection or try again.</div>
   )
+
+  if (!data) return null
 
   return (
     <div className={s.wrap}>

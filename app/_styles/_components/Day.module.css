@@ -56,6 +56,7 @@
   display: flex;
   align-items: flex-end;
   font-weight: 500;
+  transition: transform 0.2s ease-in-out;
 }
 
 .amountWrap {
@@ -123,6 +124,18 @@
 .day.open {
   transform: translateY(0);
   background-color: unset !important;
+}
+
+.day.loading {
+  background-color: unset !important;
+}
+
+.day.loading .amount {
+  transform: translateY(0);
+}
+
+.day.loading .currency {
+  transform: translateY(-20px);
 }
 
 .day.open:hover .amount,
