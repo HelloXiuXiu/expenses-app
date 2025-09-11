@@ -50,7 +50,7 @@ export const DayInfo = ({ day, selectedCategories, categories, loading, setLoadi
   )
 
   if (error) return (
-    <div>Day not found. Check your internet connection or try again.</div>
+    <DayError />
   )
 
   if (!data) return null
@@ -70,6 +70,15 @@ export const DayInfo = ({ day, selectedCategories, categories, loading, setLoadi
       <div className={s.button}>
         <Button.Large>+ add new +</Button.Large>
       </div>
+    </div>
+  )
+}
+
+function DayError() {
+  return (
+    <div className={s.error}>
+      <p>[ something went wrong loading data ]</p>
+      <p>check your connection</p>
     </div>
   )
 }
