@@ -7,7 +7,6 @@ import s from '@/app/_styles/_components/Day.module.css'
 // TO-DO display other currensies
 export const Day = ({ day, settings, selectedCategories }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [loading, setLoading] = useState(false) // loading needed here to toggle overflow
   const maxCategories = day.categories?.length > 50 ? 49 : day.categories?.length
   const totalAmount = day?.amount[settings.currency] ? +day.amount[settings.currency].toFixed(2) : 0
 
@@ -25,7 +24,7 @@ export const Day = ({ day, settings, selectedCategories }) => {
   return (
     <>
       <div className={s.dayWrap} style={{ zIndex: isOpen ? 2 : 0 }} onClick={handleDayClick}>
-        <div className={`${s.day} ${isOpen && !loading ? s.open : loading ? s.loading : ''}`}> 
+        <div className={`${s.day} ${isOpen ? s.open : ''}`}> 
           <div className={s.date}>{day.date.split('-').slice(-2).reverse().join('/')}</div>
           <div className={s.amountWrap}>
             <div className={s.amount}>{totalAmount}</div>
@@ -52,11 +51,9 @@ export const Day = ({ day, settings, selectedCategories }) => {
         </div>
         {isOpen && (
           <DayInfo
-            day={day}
+            data={day.all_expenses}
             selectedCategories={selectedCategories}
             categories={{...settings.categories, ...settings.deleted_categories}}
-            loading={loading}
-            setLoading={setLoading}
           />
         )}
       </div>

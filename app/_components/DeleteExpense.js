@@ -2,7 +2,6 @@
 
 import { useTransition } from 'react'
 import { deleteExpenseAction } from '@/lib/actions/actions'
-import { removeExpenseFromDayCache } from '@/lib/cache/dayCache'
 import { Button } from '@/app/_components/ui/Button'
 
 export const DeleteExpense = ({ id, day }) => {
@@ -11,7 +10,6 @@ export const DeleteExpense = ({ id, day }) => {
   function handleDelete() {
     startTransition(async () => {
       const res = await deleteExpenseAction(id)
-      removeExpenseFromDayCache(id, day)
     })
   }
 

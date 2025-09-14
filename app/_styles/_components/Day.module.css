@@ -126,18 +126,6 @@
   background-color: unset !important;
 }
 
-.day.loading {
-  background-color: unset !important;
-}
-
-.day.loading .amount {
-  transform: translateY(0);
-}
-
-.day.loading .currency {
-  transform: translateY(-20px);
-}
-
 .day.open:hover .amount,
 .day.open .date {
   transform: translateY(20px);

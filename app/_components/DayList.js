@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Day, DayEmpty, DayTodayEmpty } from '@/app/_components/Day'
 import { CalendarMenu } from '@/app/_components/CalendarMenu'
 
@@ -21,31 +21,38 @@ export const DayList = ({ data, settings }) => {
 
   if (selectedCategories === null) return null
 
+  // check if any expenses has deleted category
+  // TO-DO test with deleted category
+  let isSomeDeleted = false
+
   const filteredData = data.map(day => {
-    const categories = Object.keys(day.category_sums)
-    const amounts = Object.entries(day.category_sums).reduce((totals, [category, currenciesObj]) => {
+      const totals = {}
 
-      if (!selectedCategories.includes(category)) return totals
-
-      for (const [currency, amount] of Object.entries(currenciesObj)) {
-        totals[currency] = (totals[currency] || 0) + amount
+      for (const [category, currencies] of Object.entries(day.category_sums)) {
+        if (
+          selectedCategories?.includes(category) ||
+          (settings.deleted_categories[category] && showDeleted)
+        ) {
+          if (settings.deleted_categories[category]) isSomeDeleted = true
+          for (const [currency, amount] of Object.entries(currencies)) {
+            totals[currency] = (totals[currency] || 0) + amount
+          }
+        }
       }
-      return totals
-    }, {})
 
-    return {
-      date: day.date,
-      amount: amounts,
-      categories,
-      all_expenses: []
-    }
-  })
-
+      return {
+        date: day.date,
+        amount: totals,
+        categories: Object.keys(day.category_sums),
+        all_expenses: day.all_expenses || []
+      }
+    })
+  
   const emptyDays = getNextDays(EMPTY_DAYS_NUM)
   const weekSum = getWeekSum(filteredData, settings.currency)
   const monthSum = getMonthSum(filteredData, settings.currency)
 
-  const noCategories = (!selectedCategories && !showDeleted) || !filteredData.length
+  const noCategories = !selectedCategories && !showDeleted || !selectedCategories && !isSomeDeleted
 
   return (
     <>
@@ -60,11 +67,16 @@ export const DayList = ({ data, settings }) => {
       />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
       {!isToday(filteredData[0]?.date) && <DayTodayEmpty settings={settings} />}
-      {filteredData.map(day => (
-        <Day key={day.date} day={day} settings={settings} selectedCategories={selectedCategories} />
-      ))}
-      {noCategories && (
+      {noCategories ? (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
+      ) : (
+        <>
+          {filteredData.length ? filteredData.map(day => (
+            <Day key={day.date} day={day} settings={settings} selectedCategories={selectedCategories} />
+          )) : (
+            <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no data ]</div>
+          )}
+        </>
       )}
     </>
   )

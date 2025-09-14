@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from 'react'
 import { addExpenseAction } from '@/lib/actions/actions'
-import { clearDayCache } from '@/lib/cache/dayCache'
 import { Button } from '@/app/_components/ui/Button'
 import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
@@ -47,9 +46,6 @@ export function AddExpenseForm({ settings }) {
       setStatus(res?.error ? 'error' : 'success')
       if (!res?.error) {
         form.reset()
-        // just clear this day cache because each expense has id that is generated on server
-        // therefore data can't be updated optimistically
-        clearDayCache(date)
       }
     })
   }
