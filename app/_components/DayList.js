@@ -21,39 +21,31 @@ export const DayList = ({ data, settings }) => {
 
   if (selectedCategories === null) return null
 
-  const groupedSelected =  Object.values(
-    data.reduce((acc, item) => {
-      if (
-        selectedCategories?.includes(item.category) ||
-        (settings.deleted_categories[item.category] && showDeleted)
-        ) {
-        if (!acc[item.date]) {
-          acc[item.date] = {
-            date: item.date,
-            amount: {},
-            categories: []
-          }
-        }
+  const filteredData = data.map(day => {
+    const categories = Object.keys(day.category_sums)
+    const amounts = Object.entries(day.category_sums).reduce((totals, [category, currenciesObj]) => {
 
-        if (!acc[item.date].amount[item.currency]) {
-          acc[item.date].amount[item.currency] = 0
-        }
+      if (!selectedCategories.includes(category)) return totals
 
-        acc[item.date].amount[item.currency] += item.amount
-        if (!acc[item.date].categories.includes(item.category)) {
-          acc[item.date].categories.push(item.category)
-        }
+      for (const [currency, amount] of Object.entries(currenciesObj)) {
+        totals[currency] = (totals[currency] || 0) + amount
       }
-
-      return acc
+      return totals
     }, {})
-  )
+
+    return {
+      date: day.date,
+      amount: amounts,
+      categories,
+      all_expenses: []
+    }
+  })
 
   const emptyDays = getNextDays(EMPTY_DAYS_NUM)
-  const weekSum = getWeekSum(groupedSelected, settings.currency)
-  const monthSum = getMonthSum(groupedSelected, settings.currency)
+  const weekSum = getWeekSum(filteredData, settings.currency)
+  const monthSum = getMonthSum(filteredData, settings.currency)
 
-  const noCategories = (!selectedCategories && !showDeleted) || !groupedSelected.length
+  const noCategories = (!selectedCategories && !showDeleted) || !filteredData.length
 
   return (
     <>
@@ -67,8 +59,8 @@ export const DayList = ({ data, settings }) => {
         setShowDeleted={setShowDeleted}
       />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
-      {!isToday(groupedSelected[0]?.date) && <DayTodayEmpty settings={settings} />}
-      {groupedSelected.map(day => (
+      {!isToday(filteredData[0]?.date) && <DayTodayEmpty settings={settings} />}
+      {filteredData.map(day => (
         <Day key={day.date} day={day} settings={settings} selectedCategories={selectedCategories} />
       ))}
       {noCategories && (

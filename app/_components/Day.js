@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { DayInfo } from '@/app/_components/DayInfo'
 import s from '@/app/_styles/_components/Day.module.css'
 
-// TO-DO handle the case when user removes all the expenses or hides all the categories
-// day should stay opened and show 0
+// TO-DO display other currensies
 export const Day = ({ day, settings, selectedCategories }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false) // loading needed here to toggle overflow
   const maxCategories = day.categories?.length > 50 ? 49 : day.categories?.length
+  const totalAmount = day?.amount[settings.currency] ? +day.amount[settings.currency].toFixed(2) : 0
 
   function handleDayClick(e) {
     if (!isOpen) {
@@ -28,7 +28,7 @@ export const Day = ({ day, settings, selectedCategories }) => {
         <div className={`${s.day} ${isOpen && !loading ? s.open : loading ? s.loading : ''}`}> 
           <div className={s.date}>{day.date.split('-').slice(-2).reverse().join('/')}</div>
           <div className={s.amountWrap}>
-            <div className={s.amount}>{+day.amount[settings.currency].toFixed(2)}</div>
+            <div className={s.amount}>{totalAmount}</div>
             <div className={s.currency}>{settings.currency}</div>
           </div>
           <div className={s.riteSide}>
