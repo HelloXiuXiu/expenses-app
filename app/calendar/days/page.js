@@ -7,7 +7,7 @@ export default async function CalendarDaysPage() {
 
   return (
     <div style={{ position: 'relative' }}>
-      <DayList data={data} settings={settings} />
+      <DayList initialData={data} settings={settings} />
     </div>
   )
 }

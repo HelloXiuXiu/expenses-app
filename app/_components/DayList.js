@@ -6,10 +6,11 @@ import { CalendarMenu } from '@/app/_components/CalendarMenu'
 
 const EMPTY_DAYS_NUM = 2
 
-export const DayList = ({ data, settings }) => {
+export const DayList = ({ initialData, settings }) => {
   const [selectedCategories, setSelectedCategories] = useState(null)
   const [showDeleted, setShowDeleted] = useState(true)
 
+  // TO-DO move from useEffect to a funtion outside of a component ?
   useEffect(() => {
     // get categories from local storage or set and use all user's categories
     const lsCategories = localStorage.getItem('selectedCategories')
@@ -25,7 +26,7 @@ export const DayList = ({ data, settings }) => {
   // TO-DO test with deleted category
   let isSomeDeleted = false
 
-  const filteredData = data.map(day => {
+  const filteredData = initialData.map(day => {
       const totals = {}
 
       for (const [category, currencies] of Object.entries(day.category_sums)) {
@@ -44,10 +45,12 @@ export const DayList = ({ data, settings }) => {
         date: day.date,
         amount: totals,
         categories: Object.keys(day.category_sums),
+        // TO-DO create another memoised array for all_expenses to not re-render them for no-reason ?
         all_expenses: day.all_expenses || []
       }
     })
-  
+
+  // TO-DO memo
   const emptyDays = getNextDays(EMPTY_DAYS_NUM)
   const weekSum = getWeekSum(filteredData, settings.currency)
   const monthSum = getMonthSum(filteredData, settings.currency)
@@ -66,14 +69,14 @@ export const DayList = ({ data, settings }) => {
         setShowDeleted={setShowDeleted}
       />
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
-      {!isToday(filteredData[0]?.date) && <DayTodayEmpty settings={settings} />}
+      {!isToday(filteredData[0]?.date) && !noCategories && <DayTodayEmpty settings={settings} />}
       {noCategories ? (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
       ) : (
         <>
           {filteredData.length ? filteredData.map(day => (
-            <Day key={day.date} day={day} settings={settings} selectedCategories={selectedCategories} />
-          )) : (
+            <Day key={day.date} data={day} settings={settings} selectedCategories={selectedCategories} />
+            )) : (
             <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no data ]</div>
           )}
         </>
