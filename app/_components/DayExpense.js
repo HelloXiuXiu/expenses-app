@@ -14,10 +14,12 @@ export const DayExpense = ({ day, color, isSelected, onDeleteExpense }) => {
           {day.description && <span>{' '}({day.description})</span>}
         </p>
       </div>
-      <div className={s.constrols}>
-        <DeleteExpense id={day.id} day={day.date} onDelete={onDeleteExpense} />
-        <DeleteExpense id={day.id} day={day.date} onDelete={onDeleteExpense} />
-      </div>
+      {isSelected && (
+        <div className={s.constrols}>
+          <DeleteExpense id={day.id} day={day.date} onDelete={onDeleteExpense} />
+          <DeleteExpense id={day.id} day={day.date} onDelete={onDeleteExpense} />
+        </div>
+      )}
     </div>
   )
 }

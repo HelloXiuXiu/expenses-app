@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { Day, DayEmpty, DayTodayEmpty } from '@/app/_components/Day'
+import { Day, DayEmpty } from '@/app/_components/Day'
 import { CalendarMenu } from '@/app/_components/CalendarMenu'
+import { DATE_FORMAT } from '@/app/_config/config'
 
 const EMPTY_DAYS_NUM = 2
 
@@ -68,14 +69,27 @@ export const DayList = ({ initialData, settings }) => {
         showDeleted={showDeleted}
         setShowDeleted={setShowDeleted}
       />
+
       {emptyDays.reverse().map(day => <DayEmpty key={day + 1} day={day} />)}
-      {!isToday(filteredData[0]?.date) && !noCategories && <DayTodayEmpty settings={settings} />}
+      {!isToday(filteredData[0]?.date) && !noCategories && (
+        <Day
+          key={new Date().toLocaleDateString(DATE_FORMAT)}
+          data={() => getEmptyDayData(new Date().toLocaleDateString(DATE_FORMAT))}
+          settings={settings}
+          selectedCategories={selectedCategories}
+        />
+      )}
       {noCategories ? (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
       ) : (
         <>
           {filteredData.length ? filteredData.map(day => (
-            <Day key={day.date} data={day} settings={settings} selectedCategories={selectedCategories} />
+            <Day
+              key={day.date}
+              data={day}
+              settings={settings}
+              selectedCategories={selectedCategories}
+            />
             )) : (
             <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no data ]</div>
           )}
@@ -85,18 +99,26 @@ export const DayList = ({ initialData, settings }) => {
   )
 }
 
+function getEmptyDayData(date) {
+  return {
+    date,
+    amount: {},
+    categories: [],
+    all_expenses: []
+  }
+}
+
 function getNextDays(n) {
   return Array.from({ length: n }, (_, i) => {
     const d = new Date()
     d.setDate(d.getDate() + i + 1)
-    return d.toLocaleDateString('en-CA')
+    return d.toLocaleDateString(DATE_FORMAT)
   })
 }
 
 function isToday(date) {
   if (!date) return true
-  // TO-DO make more reliable comparison
-  return new Date().toLocaleDateString('en-CA') === date
+  return new Date().toLocaleDateString(DATE_FORMAT) === date
 }
 
 function getWeekSum(data, currency) {
@@ -104,7 +126,7 @@ function getWeekSum(data, currency) {
 
   const start = new Date()
   const n = start.getDay() || 7
-  const end = new Date(start - (n - 1) * 86400000).toLocaleDateString('en-CA')
+  const end = new Date(start - (n - 1) * 86400000).toLocaleDateString(DATE_FORMAT)
 
   let sum = 0
 
@@ -121,7 +143,7 @@ function getMonthSum(data, currency) {
 
   const start = new Date()
   const monthStart = new Date(start.getFullYear(), start.getMonth(), 1)
-    .toLocaleDateString('en-CA')
+    .toLocaleDateString(DATE_FORMAT)
 
   let sum = 0
 

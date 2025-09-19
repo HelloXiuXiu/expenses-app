@@ -5,9 +5,6 @@ import { DayExpense } from '@/app/_components/DayExpense'
 import s from '@/app/_styles/_components/DayInfo.module.css'
 
 export const DayInfo = ({ data, selectedCategories, categories, onDeleteExpense }) => {
-  // TO-DO fix this
-  if (!data) return null
-
   return (
     <div className={s.wrap}>
       <ul>

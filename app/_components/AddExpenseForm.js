@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import { addExpenseAction } from '@/lib/actions/actions'
 import { Button } from '@/app/_components/ui/Button'
+import { DATE_FORMAT } from '@/app/_config/config'
 import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
 // TO-DO handle no categories case
@@ -69,8 +70,9 @@ export function AddExpenseForm({ settings }) {
         <input
           type='text'
           name='date'
-          placeholder={'Date: ' + new Date().toLocaleDateString('en-CA')}
-          defaultValue={new Date().toLocaleDateString('en-CA')}
+          // TO-DO test at night 
+          placeholder={'Date: ' + new Date().toLocaleDateString(DATE_FORMAT)}
+          defaultValue={new Date().toLocaleDateString(DATE_FORMAT)}
           className={s.input}
         />
         <input
