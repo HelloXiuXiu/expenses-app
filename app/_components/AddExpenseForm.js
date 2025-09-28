@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { addExpenseAction } from '@/lib/actions/actions'
 import { Button } from '@/app/_components/ui/Button'
 import { DATE_FORMAT } from '@/app/_config/config'
-import { formatNumericVal, isValidAmount, isInvalidDate } from '@/utils/validation'
+import { formatNumericVal, isValidAmount, isValidDate } from '@/utils/validation'
 import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
 function handleAmountInput(e) {
@@ -44,7 +44,7 @@ export function AddExpenseForm({ settings }) {
       return
     }
 
-    if (isInvalidDate(date)) {
+    if (!isValidDate(date)) {
       setErrorMsg('day should be YYYY-MM-DD')
       return
     }
@@ -89,7 +89,7 @@ export function AddExpenseForm({ settings }) {
           name="date"
           // TO-DO test at night
           // TO-DO validate and show error
-          placeholder={"Date: " + new Date().toLocaleDateString(DATE_FORMAT)}
+          placeholder="Date: YYYY-MM-DD"
           defaultValue={new Date().toLocaleDateString(DATE_FORMAT)}
           className={s.input}
         />

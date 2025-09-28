@@ -22,7 +22,7 @@
   white-space: nowrap;
 }
 
-.input.description::placeholder {
+.input::placeholder {
   opacity: 0.2;
 }
 
