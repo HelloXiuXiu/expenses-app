@@ -24,6 +24,7 @@
 
 .input::placeholder {
   opacity: 0.2;
+  user-select: none;
 }
 
 .input:focus {
