@@ -6,17 +6,17 @@ import s from '@/app/_styles/_components/animation/AnimatedPopup.module.css'
 
 /*
   popupClass - popup wrapper
-  closeClass - any icon inside a popup that triggers close (here for inner use only, but could be a prop)
+  closeClass - any elem inside a popup that triggers close (all <a> also trigger close by default)
   clickableClass - elem outside that can be clicked while popup is open
 */
 
 const popupClass = 'animated-popup-box'
-const closeClass = 'animated-popup-close-icon'
 
 export const AnimatedPopup = ({
   maxHeight = 1000,
   width = 300,
   clickableClass,
+  closeClass = 'animated-popup-close-trigger',
   onSetIsOpen,
   styles = {},
   children,
@@ -43,11 +43,12 @@ export const AnimatedPopup = ({
     const isInsidePopup = e.target.closest(`.${popupClass}`)
     const isCloseIcon = e.target.closest(`.${closeClass}`)
     const isClickable = clickableClass ? e.target.closest(`.${clickableClass}`) : null
+    const isLink = e.target.closest('a')
 
-    if ((isInsidePopup || isEventStartedInside.current) && !isCloseIcon) {
+    if ((isInsidePopup || isEventStartedInside.current) && !isCloseIcon && !isLink) {
       window.addEventListener('click', closePopup, { once: true, capture: true })
     } else {
-      e.preventDefault()
+      if (!isCloseIcon && !isLink) e.preventDefault()
       if (!isClickable) e.stopPropagation()
 
       const modal = document.querySelector(`.${popupClass}`)
