@@ -20,11 +20,25 @@
   opacity: 0.6;
 }
 
+.middle {
+  background-color: var(--background-01);
+  border-color: var(--background-01);
+  color: var(--background-03);
+  padding: 8px 32px;
+  border-radius: 16px;
+}
+
+.middle:hover {
+  background-color: var(--background-03);
+  border-color: var(--background-03);
+  color: var(--background-01);
+}
+
 .small {
   background-color: var(--background-00);
   padding: 4px 18px;
 }
 
 .small:hover {
-   background-color: var(--border-light);
+  background-color: var(--border-light);
 }
