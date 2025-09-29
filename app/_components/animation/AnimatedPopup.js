@@ -5,28 +5,28 @@ import PopupHeader from '@/app/_components/PopupHeader'
 import s from '@/app/_styles/_components/animation/AnimatedPopup.module.css'
 
 /*
-  popupClass - popup wrapper
-  closeClass - any elem inside a popup that triggers close (all <a> also trigger close by default)
-  clickableClass - elem outside that can be clicked while popup is open
-*/
+  SET maxHeight to make it WORK (or do not exceed 1000px)
 
-const popupClass = 'animated-popup-box'
+  closeClass - any elem inside a popup that triggers close (all <a> also trigger close by default)
+  clickableClass - elem outside that can be clicked while popup is open (any other will be caught and prevented)
+*/
 
 export const AnimatedPopup = ({
   maxHeight = 1000,
   width = 300,
   clickableClass,
-  closeClass = 'animated-popup-close-trigger',
+  closeClass = 'animated-popup-close-trig',
   onSetIsOpen,
   styles = {},
   children,
 }) => {
+  const popupBox = useRef(null)
   const isEventStartedInside = useRef(false)
 
   useEffect(() => {
     // make it close on click outside
     window.addEventListener('click', closePopup, { once: true, capture: true })
-    // prevent text select from triggering closing
+    // prevent text select from triggering closePopup
     window.addEventListener('mousedown', handleMouseDown)
 
     return () => {
@@ -36,11 +36,13 @@ export const AnimatedPopup = ({
   }, [])
 
   function handleMouseDown(e) {
-    isEventStartedInside.current = e.target.closest(`.${popupClass}`)
+    isEventStartedInside.current = popupBox.current?.contains(e.target)
   }
 
   function closePopup(e) {
-    const isInsidePopup = e.target.closest(`.${popupClass}`)
+    if (!popupBox.current) return
+
+    const isInsidePopup = popupBox.current.contains(e.target)
     const isCloseIcon = e.target.closest(`.${closeClass}`)
     const isClickable = clickableClass ? e.target.closest(`.${clickableClass}`) : null
     const isLink = e.target.closest('a')
@@ -51,9 +53,8 @@ export const AnimatedPopup = ({
       if (!isCloseIcon && !isLink) e.preventDefault()
       if (!isClickable) e.stopPropagation()
 
-      const modal = document.querySelector(`.${popupClass}`)
-      modal.classList.add(s.popupBoxClose)
-      modal.addEventListener('animationend', () => onSetIsOpen(false), { once: true })
+      popupBox.current.classList.add(s.popupBoxClose)
+      popupBox.current.addEventListener('animationend', () => onSetIsOpen(false), { once: true })
     }
 
     isEventStartedInside.current = false
@@ -61,7 +62,8 @@ export const AnimatedPopup = ({
 
   return (
     <div
-      className={`${s.popupBox} ${popupClass}`}
+      ref={popupBox}
+      className={s.popupBox}
       style={{
         '--popup-width': `${width}px`,
         '--popup-max-height': `${maxHeight}px`,
