@@ -21,7 +21,7 @@ export function isFuture(str) {
   const dtMidnight = new Date(dt)
   dtMidnight.setHours(0,0,0,0)
 
-  return dtMidnight <= today
+  return dtMidnight > today
 }
 
 export function isValidDate(str) {
@@ -34,7 +34,7 @@ export function isValidDate(str) {
   const [y, m, d] = str.split('-')
   const year = +y, month = +m, day = +d
 
-  // must be a valid day
+  // must be a real day
   const dt = new Date(year, month - 1, day)
   if (
     dt.getFullYear() !== year ||
