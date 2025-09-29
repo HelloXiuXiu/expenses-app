@@ -89,3 +89,10 @@
   border-bottom-right-radius: 3px;
 }
 
+.noCategories {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto 50px auto;
+}
