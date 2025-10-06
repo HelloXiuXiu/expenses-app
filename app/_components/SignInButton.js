@@ -1,7 +1,6 @@
 'use client'
 
 import { useTransition } from 'react'
-import Image from 'next/image'
 import { signInAction } from '@/lib/actions/actions'
 import { Button } from '@/app/_components/ui/Button'
 
@@ -28,7 +27,7 @@ function SignInButton() {
       onClick={() => handleLogin('github')}
       style={{ maxWidth: '200px', display: 'flex', gap: '4px', justifyContent: 'center', alignItems: 'center' }}
     > 
-      <Image
+      <img
         src="/static/github.svg"
         width={24}
         height={24}
