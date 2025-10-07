@@ -8,8 +8,11 @@
   justify-content: space-between;
   align-items: center;
   height: 40px;
-  font-size: 14px;
   background-color: var(--background-00);
   border-bottom: 1px solid var(--primary);
   z-index: 1000;
+}
+
+.headerLink {
+  font: var(--font-body-14);
 }

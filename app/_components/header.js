@@ -12,7 +12,7 @@ export default async function Header() {
 
   return (
     <header className={s.header}>
-      <Link href='/calendar/days'>Calendar/Days</Link>
+      <Link href='/calendar/days' className={s.headerLink}>Calendar/Days</Link>
       {/* <Link href='/calendar/months'>Calendar/Months</Link> */}
       {/* <Link href='/day/000000'>Day 0000-00-00</Link>*/}
       {/* <Link href='/day/20250319'>Day 2025-03-19</Link> */}

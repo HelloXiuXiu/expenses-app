@@ -8,8 +8,7 @@
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
-  line-height: 18px;
+  font: var(--font-body-12);
   text-align: center;
   color: var(--primary);
   cursor: pointer;
@@ -23,8 +22,7 @@
   left: 0;
   right: 0;
   max-height: 0;
-  font-size: 12px;
-  line-height: 18px;
+  font: var(--font-body-12);
   color: var(--background-00);
   overflow: hidden;
   pointer-events: none;
@@ -71,7 +69,7 @@
 
 .sum {
   display: inline;
-  font-size: 14px;
+  font: var(--font-body-14);
   font-weight: 600;
   margin-right: 8px;
   word-break: break-word;

@@ -80,7 +80,7 @@ export const DayList = ({ initialData, settings }) => {
         />
       )}
       {noCategories ? (
-        <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no categories selected ]</div>
+        <div style={{ marginTop: '24px', textAlign: 'center', font: 'var(--font-body-16)' }}>[ no categories selected ]</div>
       ) : (
         <>
           {filteredData.length ? filteredData.map(day => (

@@ -72,17 +72,17 @@ export const SelectCategoriesPopup = ({
       )}
       <div className={s.buttons}>
         <Button.Small
-          style={{ opacity: showDeleted ? '1' : '0.4', flexGrow: 1}}
+          style={{ opacity: showDeleted ? '1' : '0.4', flexGrow: 1, padding: '4px' }}
           onClick={() => setShowDeleted(state => !state)}
         >
-          <span style={{ opacity: showDeleted ? '1' : '0.6'}}>
+          <span style={{ opacity: showDeleted ? '1' : '0.6' }}>
             show deleted categories
           </span>
         </Button.Small>
         <Button.Small
           onClick={handleRightButtonClick}
           disabled={isNoCategories}
-          style={{ minWidth: '90px', flexGrow: 1 }}
+          style={{ minWidth: '85px', flexGrow: 1, padding: '4px' }}
         >
           {isAllSelected ? 'hide all' : isNoSelected ? 'show all' : 'clear all'}
         </Button.Small> 

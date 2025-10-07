@@ -1,20 +1,12 @@
-@font-face {
-  font-family: 'Inter Tight';
-  src: url('/fonts/InterTight-VariableFont_wght.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-VariableFont_opsz,wght.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
+  --font-xxl-113: 420 113px/1 var(--font-inter-tight);
+  --font-title-22: 550 22px/1.2 var(--font-inter-tight);
+  --font-body-19: 500 19px/1.2 var(--font-inter);
+  --font-body-16: 400 16px/1.2 var(--font-inter);
+  --font-body-14: 500 14px/1.2 var(--font-inter-tight);
+  --font-body-12: 450 12px/1.25 var(--font-inter);
+  --font-buttons-13: 500 13px/1.2 var(--font-inter);
+
   --side-padding: 20px;
 
   --background-00: #ffffff;
@@ -38,6 +30,10 @@
     --primary: #ffffff;
     --primary-hover: #000000;
   }
+
+  html {
+    color-scheme: dark;
+  }
 }
 
 html,
@@ -56,15 +52,16 @@ body {
   padding: 41px 0 0 0;
   color: var(--primary);
   background: var(--background-00);
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
-  box-sizing: border-box;
+  font: var(--font-body-12);
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -74,10 +71,4 @@ a {
 
 ul {
   list-style: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

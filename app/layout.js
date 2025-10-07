@@ -1,4 +1,5 @@
 import Header from '@/app/_components/Header'
+import { inter, interTight } from './fonts'
 import '@/app/_styles/globals.css'
 
 export const metadata = {
@@ -8,23 +9,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          rel='preload'
-          href='/fonts/Inter-VariableFont_opsz,wght.woff2'
-          as='font'
-          type='font/woff2'
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preload'
-          href='/fonts/InterTight-VariableFont_wght.woff2'
-          as='font'
-          type='font/woff2'
-          crossOrigin='anonymous'
-        />
-      </head>
+    <html
+      lang="en"
+      style={{
+        "--font-inter": inter.style.fontFamily,
+        "--font-inter-tight": interTight.style.fontFamily,
+      }}>
       <body>
         <Header />
         {children}

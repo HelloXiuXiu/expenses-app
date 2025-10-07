@@ -37,8 +37,7 @@
 }
 
 .toastText {
-  font-weight: 500;
-  font-size: 19px;
+  font: var(--font-body-19);
 }
 
 .topCenter .toastInnerWrap {

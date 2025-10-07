@@ -55,6 +55,7 @@
   text-align: right;
   display: flex;
   align-items: flex-end;
+  font: var(--font-body-16);
   font-weight: 500;
   transition: transform 0.2s ease-in-out;
 }
@@ -69,10 +70,8 @@
 }
 
 .amount {
-  font-family: 'Inter Tight', sans-serif;
   transform: translateY(20px);
-  font-size: 113px;
-  line-height: 1;
+  font: var(--font-xxl-113);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow-y: hidden;
@@ -84,7 +83,7 @@
   top: 28px;
   right: -4px;
   width: 30px;
-  font-size: 12px;
+  font: var(--font-body-12);
   text-transform: lowercase;
   font-weight: 500;
   white-space: nowrap;
@@ -97,8 +96,8 @@
   flex-shrink: 0;
   width: 120px;
   margin-left: auto;
+  font: var(--font-body-19);
   font-weight: 600;
-  font-size: 19px;
 }
 
 .categories {
@@ -118,7 +117,7 @@
 }
 
 .categotyCount {
-  font-size: 12px;
+  font: var(--font-body-12);
   line-height: 7px;
 }
 

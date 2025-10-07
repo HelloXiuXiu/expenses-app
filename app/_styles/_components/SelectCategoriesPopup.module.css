@@ -1,7 +1,6 @@
 .categories {
   color: var(--primary);
-  font-size: 12px;
-  line-height: 15px;
+  font: var(--font-body-12);
   font-weight: 500;
 }
 

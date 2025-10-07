@@ -7,7 +7,7 @@
 .title {
   margin: 26px 16px;
   text-align: center;
-  font-size: 12px;
+  font: var(--font-body-12);
   white-space: nowrap;
 }
 
@@ -16,9 +16,7 @@
   padding: 8px 16px;
   border: none;
   border-bottom: 1px solid var(--border-light);
-  font-size: 14px;
-  font-family: 'Inter Tight', sans-serif;
-  font-weight: 500;
+  font: var(--font-body-14);
   white-space: nowrap;
 }
 

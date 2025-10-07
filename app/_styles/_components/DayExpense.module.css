@@ -20,12 +20,11 @@
 }
 
 .amount {
-  font-size: 22px;
-  font-weight: 600;
+  font: var(--font-title-22);
 }
 
 .descr {
-  font-size: 12px;
+  font: var(--font-body-12);
   opacity: 0.4;
 }
 
