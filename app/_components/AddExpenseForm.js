@@ -6,6 +6,7 @@ import { addExpenseAction } from '@/lib/actions/actions'
 import { Button } from '@/app/_components/ui/Button'
 import { DATE_FORMAT } from '@/app/_config/config'
 import { formatNumericVal, isValidAmount, isValidDate, isFuture } from '@/utils/validation'
+import { showBottomToast } from '@/utils/toaster'
 import s from '@/app/_styles/_components/AddExpenseForm.module.css'
 
 function handleAmountInput(e) {
@@ -22,7 +23,6 @@ export function AddExpenseForm({ settings }) {
   const [isPending, startTransition] = useTransition()
   const [errorMsg, setErrorMsg] = useState('')
   const [categoryColor, setCategoryColor] = useState(settings.categories[categories[0]])
-  const [status, setStatus] = useState('')
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -64,12 +64,19 @@ export function AddExpenseForm({ settings }) {
         currency
       }
       const res = await addExpenseAction(dayData)
-      setStatus(res?.error ? 'error' : 'success')
-      if (!res?.error) {
-        form.reset()
+
+      let type = 'success'
+      let text = 'Expense added successfully.'
+
+      if (res?.error) {
+        type = 'error'
+        text = 'Something went wrong. Expense was not created.'
+        // TO-DO invalidate route on error only
       } else {
-        // TO-DO show error toast here
+        form.reset()
       }
+
+    showBottomToast({ text, type })
     })
   }
 
@@ -140,8 +147,6 @@ export function AddExpenseForm({ settings }) {
           </Button.Large>
         </div>
       </form>
-      {status === "success" && <p className={s.success}>Expense added!</p>}
-      {status === "error" && <p className={s.error}>Something went wrong.</p>}
     </>
   )
 }

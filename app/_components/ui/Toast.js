@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import s from '@/app/_styles/_components/ui/Toast.module.css'
 
 const icons = {
@@ -5,16 +6,20 @@ const icons = {
   success: '/static/successIcon.svg',
 }
 
-// type (optional): error, success
-// position: topCenter, bottomRight
-export function Toast({ text, icon, type, position = 'topCenter',}) {
+/*
+  toast can be invoked via toaster.js in utils
+  type (optional): error, success (add an icon before text)
+  position: topCenter, bottomRight
+*/
+
+export const Toast = forwardRef(function Toast({ text, icon, type, position = 'topCenter' }, ref) {
   return (
-    <div className={s.box}>
-      <div className={`${s.toastWrap} ${s[position]}`}>
+    <div className={`${s.toastWrap} ${s[position]}`}>
+      <div ref={ref} className={s.toastInnerWrap}>
         {icon && <div class={s.toastIcon}>{icon}</div>}
-        {!icon && icons[type] && <img class={s.toastIcon} src={icons[type]} alt={`${type}-icon`} />}
+        {!icon && icons[type] && <img className={s.toastIcon} src={icons[type]} alt={`${type}-icon`} />}
         <div className={s.toastText}>{text}</div>
       </div>
     </div>
   )
-}
+})
