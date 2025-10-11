@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import { Toast } from '@/app/_components/ui/Toast'
+import { Toast } from '@/app/_components/common/ui/Toast'
 
 const TOAST_TIMER = 2000
 
