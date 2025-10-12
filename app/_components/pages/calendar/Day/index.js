@@ -15,16 +15,34 @@ export const Day = ({ data, settings, selectedCategories }) => {
   const maxCategories = data.categories?.length > 50 ? 49 : data.categories?.length
   const totalAmount = optimisticData?.amount?.[settings.currency] ? +optimisticData.amount[settings.currency].toFixed(2) : 0
 
+  // TO-DO use optimistic state, or check other currensies
   useEffect(() => {
-    // TO-DO update only when an expense added
-    // data.amount > optimisticData.amount wont work if some items was deleted
-    if (true) {
+    // update after filters or adding new items if some items where deleted
+    if (deletedIds.length) {
+      let curAmmount = { ...data.amount }
+      let curExpenses = [], curCategories = []
+
+      data.all_expenses.forEach(item => {
+        if (!deletedIds.includes(item.id)) {
+          curExpenses.push(item)
+          if (!curCategories.includes(item.category)) curCategories.push(item.category)
+        } else if (selectedCategories.split(',').includes(item.category)) {
+          curAmmount[item.currency] = curAmmount[item.currency] - item.amount
+        }
+      })
+
       setOptimisticData(state => ({
         ...state,
-        amount: data.amount, // TO-DO exclude deleted items deletedIds.length ? ... : data.amount
-        all_expenses: data.all_expenses?.filter(item => !deletedIds.includes(item.id)) || []
+        amount: curAmmount,
+        all_expenses: curExpenses,
+        categories: curCategories,
       }))
+      return
     }
+
+    // update whole data after filters or adding new items
+    const hasAmountChanged = data.amount[settings.currency] !== optimisticData.amount[settings.currency] || optimisticData.all_expenses.length !== data.all_expenses.length
+    if (hasAmountChanged) setOptimisticData(data)
   }, [data])
 
   useEffect(() => {
