@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { AnimatedPopup } from '@/app/_components/common/animation/AnimatedPopup'
-import { AddExpenseForm } from './components/AddExpenseForm'
+import { AddExpenseForm } from '../AddExpenseForm'
 import s from './styles.module.css'
 
 export default function NewExpense({ settings }) {

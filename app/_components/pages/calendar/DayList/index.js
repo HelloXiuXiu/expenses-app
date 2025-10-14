@@ -74,7 +74,7 @@ export const DayList = ({ initialData, settings }) => {
       {!isToday(filteredData[0]?.date) && !noCategories && (
         <Day
           key={new Date().toLocaleDateString(DATE_FORMAT)}
-          data={() => getEmptyDayData(new Date().toLocaleDateString(DATE_FORMAT))}
+          data={getEmptyDayData(new Date().toLocaleDateString(DATE_FORMAT))}
           settings={settings}
           selectedCategories={selectedCategories}
         />

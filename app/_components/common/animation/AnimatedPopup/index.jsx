@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import PopupHeader from './components/PopupHeader'
+import PopupHeader from './PopupHeader'
 import s from './styles.module.css'
 
 /*
