@@ -6,7 +6,7 @@ import s from './styles.module.css'
 export const DayExpense = ({ day, color, isSelected, onDeleteExpense }) => {
   return (
     <div className={s.wrap} style={{ opacity: isSelected ? 1 : 0.25 }}>
-      <div className={s.dot} style={{ backgroundColor: color }}></div>
+      <div className={s.dot} style={{ backgroundColor: color }} />
       <div>
         <p className={s.amount}>{day.amount}</p>
         <p className={s.descr}>

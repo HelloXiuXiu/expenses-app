@@ -110,8 +110,7 @@ export const Day = ({ data, settings, selectedCategories }) => {
                     backgroundColor: settings.categories[category]
                       || settings.deleted_categories[category]
                   }}
-                >
-                </div>
+                />
               ))}
               <div className={s.categotyCount}>
                 {optimisticData.categories?.length > maxCategories + 1 && '...'}
@@ -128,7 +127,7 @@ export const Day = ({ data, settings, selectedCategories }) => {
           />
         )}
       </div>
-      {isOpen && <div className={s.overlay} onClick={handleClose}></div>}
+      {isOpen && <div className={s.overlay} onClick={handleClose} />}
     </>
   )
 }
@@ -137,7 +136,7 @@ export const DayEmpty = ({ day }) => {
   return (
     <div className={`${s.day} ${s.dayWrap}`} style={{ opacity: '0.1', pointerEvents: 'none' }}>
       <div className={s.date}>{day.split('-').slice(-2).reverse().join('/')}</div>
-      <div className={s.amountWrap}></div>
+      <div className={s.amountWrap} />
       <div className={s.riteSide}>
         {getWeekday(day)}
       </div>

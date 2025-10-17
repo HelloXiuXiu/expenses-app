@@ -139,14 +139,13 @@ export function AddExpenseForm({ settings }) {
               </option>
             ))}
           </select>
-          <div className={s.dot} style={{ backgroundColor: categoryColor || 'none' }}></div>
+          <div className={s.dot} style={{ backgroundColor: categoryColor || 'none' }} />
         </div>
 
         <div className={s.relative} style={{ display: 'flex' }}>
           {errorMsg
             && (
               <div className={s.errorMsg}>
-                <span></span>
                 {errorMsg}
               </div>
             )}

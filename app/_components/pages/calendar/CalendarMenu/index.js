@@ -40,15 +40,15 @@ export const CalendarMenu = ({
     <>
       {!isOpen && <div className={s.openTrig} onClick={() => setIsOpen(true)}>[ open stats ]</div>}
 
-      <div className={s.menuIndent} style={menuIndentStyle}></div>
+      <div className={s.menuIndent} style={menuIndentStyle} />
 
       <div className={s.menuBox} style={menuStyle}>
         <div id="menuContent" className={s.menuContent}>
           <div className={s.leftContent}>
             <div className={s.layoutToggle}>
-              <span className={s.line}></span>
-              <span className={s.line}></span>
-              <span className={s.line}></span>
+              <span className={s.line} />
+              <span className={s.line} />
+              <span className={s.line} />
             </div>
             <div className={s.sums}>
               <div style={{ display: 'inline' }}>
