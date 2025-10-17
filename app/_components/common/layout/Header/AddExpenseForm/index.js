@@ -99,7 +99,7 @@ export function AddExpenseForm({ settings }) {
 
   return (
     <>
-      <div className={s.title}>[ create new expense ]</div>
+      <div className={s.title}>[{'  '}create new expense{'  '}]</div>
       <form
         onSubmit={handleSubmit}
         onChange={() => setErrorMsg('')}
@@ -144,13 +144,12 @@ export function AddExpenseForm({ settings }) {
 
         <div className={s.relative} style={{ display: 'flex' }}>
           {errorMsg
-            ? (
+            && (
               <div className={s.errorMsg}>
                 <span></span>
                 {errorMsg}
               </div>
-            )
-            : null}
+            )}
           <Button.Large type="submit" disabled={isPending} style={{ margin: '45px 16px 16px 16px' }}>
             {isPending ? 'adding...' : '+ add expense +'}
           </Button.Large>
