@@ -6,7 +6,7 @@ function ButtonBase({
   onClick,
   disabled,
   style,
-  children,
+  children
 }) {
   return (
     <button
@@ -22,7 +22,7 @@ function ButtonBase({
 }
 
 export const Button = {
-  Large: (props) => <ButtonBase {...props} size='large' />,
-  Middle: (props) => <ButtonBase {...props} size='middle' />,
-  Small: (props) => <ButtonBase {...props} size='small' />,
+  Large: (props) => <ButtonBase {...props} size="large" />,
+  Middle: (props) => <ButtonBase {...props} size="middle" />,
+  Small: (props) => <ButtonBase {...props} size="small" />
 }

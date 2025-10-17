@@ -22,7 +22,7 @@ function SignOutButton() {
   }
 
   return (
-    <Button.Large onClick={handleSignOut} disabled={isPending} >
+    <Button.Large onClick={handleSignOut} disabled={isPending}>
       <span>{isPending ? '...signing out' : 'Sign Out'}</span>
     </Button.Large>
   )

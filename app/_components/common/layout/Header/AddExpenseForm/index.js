@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { addExpenseAction } from '@/lib/actions/actions'
 import { Button } from '@/app/_components/common/ui/Button'
 import { DATE_FORMAT } from '@/app/config'
-import { formatNumericVal, isValidAmount, isValidDate, isFuture } from '@/utils/validation'
+import { formatNumericVal, isFuture, isValidAmount, isValidDate } from '@/utils/validation'
 import { showBottomToast } from '@/utils/toaster'
 import s from './styles.module.css'
 
@@ -76,7 +76,7 @@ export function AddExpenseForm({ settings }) {
         form.reset()
       }
 
-    showBottomToast({ text, type })
+      showBottomToast({ text, type })
     })
   }
 
@@ -84,20 +84,22 @@ export function AddExpenseForm({ settings }) {
     setCategoryColor(settings.categories[e.target.value])
   }
 
-  if (!categories.length) return (
-    <div className={s.noCategories}>
-      <div  className={s.title}>[  to add an expense create at least one category  ]</div>
-      {window.location.pathname !== '/account/settings' && (
-        <Link href="/account/settings" style={{ marginBottom: '16px' }}>
-          <Button.Middle>Go to Settings</Button.Middle>
-        </Link>
-      )}
-    </div>
-  )
+  if (!categories.length) {
+    return (
+      <div className={s.noCategories}>
+        <div className={s.title}>[ to add an expense create at least one category ]</div>
+        {window.location.pathname !== '/account/settings' && (
+          <Link href="/account/settings" style={{ marginBottom: '16px' }}>
+            <Button.Middle>Go to Settings</Button.Middle>
+          </Link>
+        )}
+      </div>
+    )
+  }
 
   return (
     <>
-      <div className={s.title}>[  create new expense  ]</div>
+      <div className={s.title}>[ create new expense ]</div>
       <form
         onSubmit={handleSubmit}
         onChange={() => setErrorMsg('')}
@@ -137,13 +139,20 @@ export function AddExpenseForm({ settings }) {
               </option>
             ))}
           </select>
-          <div className={s.dot} style={{ backgroundColor: categoryColor || "none" }}></div>
+          <div className={s.dot} style={{ backgroundColor: categoryColor || 'none' }}></div>
         </div>
-        
-        <div className={s.relative} style={{ display: "flex" }}>
-          {errorMsg ? <div className={s.errorMsg}><span></span>{errorMsg}</div> : null}
-          <Button.Large type="submit" disabled={isPending} style={{ margin: "45px 16px 16px 16px" }}>
-            {isPending ? "adding..." : "+ add expense +"}
+
+        <div className={s.relative} style={{ display: 'flex' }}>
+          {errorMsg
+            ? (
+              <div className={s.errorMsg}>
+                <span></span>
+                {errorMsg}
+              </div>
+            )
+            : null}
+          <Button.Large type="submit" disabled={isPending} style={{ margin: '45px 16px 16px 16px' }}>
+            {isPending ? 'adding...' : '+ add expense +'}
           </Button.Large>
         </div>
       </form>

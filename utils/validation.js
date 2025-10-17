@@ -1,7 +1,5 @@
 export function formatNumericVal(str) {
-  return str
-    .replace(',', '.')
-    .replace(/[^0-9.]|(?<=[.].*)[.]/g, '') // remove all not digits, and extra . or ,
+  return str.replace(',', '.').replace(/[^0-9.]|(?<=[.].*)[.]/g, '') // remove all not digits, and extra . or ,
     .replace(/^(\d+)([.]?)(\d{0,2}).*$/, '$1$2$3') // allow only digits after .
 }
 
@@ -11,15 +9,14 @@ export function isValidAmount(str) {
 }
 
 export function isFuture(str) {
-  const [y, m, d] = str.split('-')
-  const year = +y, month = +m, day = +d
+  const [year, month, day] = getYearMonthDay(str)
   // could be Invalid Date, validate first
   const dt = new Date(year, month - 1, day)
 
   const today = new Date()
-  today.setHours(0,0,0,0)
+  today.setHours(0, 0, 0, 0)
   const dtMidnight = new Date(dt)
-  dtMidnight.setHours(0,0,0,0)
+  dtMidnight.setHours(0, 0, 0, 0)
 
   return dtMidnight > today
 }
@@ -31,16 +28,11 @@ export function isValidDate(str) {
   const pattern = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)
   if (!pattern) return false
 
-  const [y, m, d] = str.split('-')
-  const year = +y, month = +m, day = +d
+  const [year, month, day] = getYearMonthDay(str)
 
   // must be a real day
   const dt = new Date(year, month - 1, day)
-  if (
-    dt.getFullYear() !== year ||
-    dt.getMonth() !== month - 1 ||
-    dt.getDate() !== day
-  ) return false
+  if (dt.getFullYear() !== year || dt.getMonth() !== month - 1 || dt.getDate() !== day) return false
 
   return true
 }
@@ -58,4 +50,8 @@ export function validateNewExpense(expense) {
   }
 
   return true
+}
+
+function getYearMonthDay(str) {
+  return str.split('-').map(item => +item)
 }

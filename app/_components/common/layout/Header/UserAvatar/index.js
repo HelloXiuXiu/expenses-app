@@ -26,18 +26,18 @@ function UserAvatar({ user }) {
   return (
     <div className={s.user + ' popup-box'}>
       <img
-        alt='user avatar'
+        alt="user avatar"
         src={user.user_metadata.avatar_url}
-        referrerPolicy='no-referrer'
+        referrerPolicy="no-referrer"
         className={s.userImage}
         onClick={handleClick}
       />
       {isOpen && (
         <div className={s.userProfile}>
           <h2 className={s.userTitle}>Profile {user.email}</h2>
-          <Link href='/account/settings'>Settings</Link>
-          <Link href='/account'>Account</Link>
-          <SignOutButton style={{ width: '100%'}} />
+          <Link href="/account/settings">Settings</Link>
+          <Link href="/account">Account</Link>
+          <SignOutButton style={{ width: '100%' }} />
         </div>
       )}
     </div>

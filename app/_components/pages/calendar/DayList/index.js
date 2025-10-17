@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Day, DayEmpty } from '../Day'
 import { CalendarMenu } from '../CalendarMenu'
 import { DATE_FORMAT } from '@/app/config'
@@ -28,28 +28,28 @@ export const DayList = ({ initialData, settings }) => {
   let isSomeDeleted = false
 
   const filteredData = initialData.map(day => {
-      const totals = {}
+    const totals = {}
 
-      for (const [category, currencies] of Object.entries(day.category_sums)) {
-        if (
-          selectedCategories?.includes(category) ||
-          (settings.deleted_categories[category] && showDeleted)
-        ) {
-          if (settings.deleted_categories[category]) isSomeDeleted = true
-          for (const [currency, amount] of Object.entries(currencies)) {
-            totals[currency] = (totals[currency] || 0) + amount
-          }
+    for (const [category, currencies] of Object.entries(day.category_sums)) {
+      if (
+        selectedCategories?.includes(category)
+        || (settings.deleted_categories[category] && showDeleted)
+      ) {
+        if (settings.deleted_categories[category]) isSomeDeleted = true
+        for (const [currency, amount] of Object.entries(currencies)) {
+          totals[currency] = (totals[currency] || 0) + amount
         }
       }
+    }
 
-      return {
-        date: day.date,
-        amount: totals,
-        categories: Object.keys(day.category_sums),
-        // TO-DO create another memoised array for all_expenses to not re-render them for no-reason ?
-        all_expenses: day.all_expenses || []
-      }
-    })
+    return {
+      date: day.date,
+      amount: totals,
+      categories: Object.keys(day.category_sums),
+      // TO-DO create another memoised array for all_expenses to not re-render them for no-reason ?
+      all_expenses: day.all_expenses || []
+    }
+  })
 
   // TO-DO memo
   const emptyDays = getNextDays(EMPTY_DAYS_NUM)
@@ -79,22 +79,26 @@ export const DayList = ({ initialData, settings }) => {
           selectedCategories={selectedCategories}
         />
       )}
-      {noCategories ? (
-        <div style={{ marginTop: '24px', textAlign: 'center', font: 'var(--font-body-16)' }}>[ no categories selected ]</div>
-      ) : (
-        <>
-          {filteredData.length ? filteredData.map(day => (
-            <Day
-              key={day.date}
-              data={day}
-              settings={settings}
-              selectedCategories={selectedCategories}
-            />
-            )) : (
-            <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no data ]</div>
-          )}
-        </>
-      )}
+      {noCategories
+        ? (
+          <div style={{ marginTop: '24px', textAlign: 'center', font: 'var(--font-body-16)' }}>
+            [ no categories selected ]
+          </div>
+        )
+        : (
+          <>
+            {filteredData.length
+              ? filteredData.map(day => (
+                <Day
+                  key={day.date}
+                  data={day}
+                  settings={settings}
+                  selectedCategories={selectedCategories}
+                />
+              ))
+              : <div style={{ marginTop: '24px', textAlign: 'center' }}>[ no data ]</div>}
+          </>
+        )}
     </>
   )
 }
@@ -132,14 +136,14 @@ function getWeekSum(data, currency) {
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].date < end) break
-    sum += (data[i].amount[currency] || 0)
+    sum += data[i].amount[currency] || 0
   }
 
   return sum.toFixed(2)
 }
 
 function getMonthSum(data, currency) {
-    if (!data.length) return 0
+  if (!data.length) return 0
 
   const start = new Date()
   const monthStart = new Date(start.getFullYear(), start.getMonth(), 1)
@@ -149,7 +153,7 @@ function getMonthSum(data, currency) {
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].date < monthStart) break
-    sum += (data[i].amount[currency] || 0)
+    sum += data[i].amount[currency] || 0
   }
 
   return sum.toFixed(2)

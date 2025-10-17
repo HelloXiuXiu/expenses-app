@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatedPopup } from '@/app/_components/common/animation/AnimatedPopup'
 import { SelectCategoriesPopup } from '../SelectCategoriesPopup'
 import s from './styles.module.css'
@@ -38,14 +38,12 @@ export const CalendarMenu = ({
 
   return (
     <>
-      {!isOpen && (
-        <div className={s.openTrig} onClick={() => setIsOpen(true)}>[ open stats ]</div>
-      )}
+      {!isOpen && <div className={s.openTrig} onClick={() => setIsOpen(true)}>[ open stats ]</div>}
 
       <div className={s.menuIndent} style={menuIndentStyle}></div>
 
       <div className={s.menuBox} style={menuStyle}>
-        <div id='menuContent' className={s.menuContent}>
+        <div id="menuContent" className={s.menuContent}>
           <div className={s.leftContent}>
             <div className={s.layoutToggle}>
               <span className={s.line}></span>
@@ -53,11 +51,11 @@ export const CalendarMenu = ({
               <span className={s.line}></span>
             </div>
             <div className={s.sums}>
-              <div style={{display: 'inline' }}>
+              <div style={{ display: 'inline' }}>
                 <span className={s.sum}>{formatNumber(+sumWeek)}</span>
                 <span className={s.sumLabel}>[ week ]</span>
               </div>
-              <div style={{display: 'inline' }}>
+              <div style={{ display: 'inline' }}>
                 <span className={s.sum}>{formatNumber(+sumMonth)}</span>
                 <span className={s.sumLabel}>[ month ]</span>
               </div>
@@ -66,7 +64,7 @@ export const CalendarMenu = ({
           <div className={`${s.closeTrig} clickable`} onClick={() => setIsOpen(false)}>[ close ]</div>
           <div
             className={s.categories}
-            style={{ opacity: isCategoriesOpen ? '0.5' : '1'}}
+            style={{ opacity: isCategoriesOpen ? '0.5' : '1' }}
             onClick={() => setIsCategoriesOpen(true)}
           >
             {selectedLength}/{categoriesLenth} categories
@@ -77,7 +75,7 @@ export const CalendarMenu = ({
           <AnimatedPopup
             maxHeight={1000}
             width={300}
-            clickableClass='clickable'
+            clickableClass="clickable"
             onSetIsOpen={setIsCategoriesOpen}
             styles={{ top: menuHeight + 40 + 20 + 'px', right: '20px' }}
           >

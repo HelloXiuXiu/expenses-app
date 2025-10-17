@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DayInfo } from '../DayInfo'
 import { DATE_FORMAT } from '@/app/config'
 import s from './styles.module.css'
@@ -13,7 +13,9 @@ export const Day = ({ data, settings, selectedCategories }) => {
   const [deletedIds, setDeletedIds] = useState([])
 
   const maxCategories = data.categories?.length > 50 ? 49 : data.categories?.length
-  const totalAmount = optimisticData?.amount?.[settings.currency] ? +optimisticData.amount[settings.currency].toFixed(2) : 0
+  const totalAmount = optimisticData?.amount?.[settings.currency]
+    ? +optimisticData.amount[settings.currency].toFixed(2)
+    : 0
 
   // TO-DO use optimistic state, or check other currensies
   useEffect(() => {
@@ -35,13 +37,14 @@ export const Day = ({ data, settings, selectedCategories }) => {
         ...state,
         amount: curAmmount,
         all_expenses: curExpenses,
-        categories: curCategories,
+        categories: curCategories
       }))
       return
     }
 
     // update whole data after filters or adding new items
-    const hasAmountChanged = data.amount[settings.currency] !== optimisticData.amount[settings.currency] || optimisticData.all_expenses.length !== data.all_expenses.length
+    const hasAmountChanged = data.amount[settings.currency] !== optimisticData.amount[settings.currency]
+      || optimisticData.all_expenses.length !== data.all_expenses.length
     if (hasAmountChanged) setOptimisticData(data)
   }, [data])
 
@@ -74,9 +77,9 @@ export const Day = ({ data, settings, selectedCategories }) => {
       if (!cur) return data
 
       const newData = structuredClone(data)
-      // TO-DO update amount only of category is selected ??? 
+      // TO-DO update amount only of category is selected ???
       // or disable deleting gray expenses
-      newData.amount[cur.currency] =  data.amount[cur.currency] - cur.amount
+      newData.amount[cur.currency] = data.amount[cur.currency] - cur.amount
       newData.all_expenses = data.all_expenses.filter(item => item !== cur)
       newData.categories = [...new Set(newData.all_expenses.map(a => a.category))]
       setDeletedIds(arr => [...arr, id])
@@ -90,7 +93,7 @@ export const Day = ({ data, settings, selectedCategories }) => {
   return (
     <>
       <div className={s.dayWrap} style={{ zIndex: isOpen ? 2 : 0 }} onClick={handleDayClick}>
-        <div className={`${s.day} ${isOpen ? s.open : ''}`}> 
+        <div className={`${s.day} ${isOpen ? s.open : ''}`}>
           <div className={s.date}>{optimisticData.date.split('-').slice(-2).reverse().join('/')}</div>
           <div className={s.amountWrap}>
             <div className={s.amount}>{totalAmount}</div>
@@ -104,10 +107,11 @@ export const Day = ({ data, settings, selectedCategories }) => {
                   key={category}
                   className={s.category}
                   style={{
-                    backgroundColor: settings.categories[category] ||
-                    settings.deleted_categories[category]
+                    backgroundColor: settings.categories[category]
+                      || settings.deleted_categories[category]
                   }}
-                ></div>
+                >
+                </div>
               ))}
               <div className={s.categotyCount}>
                 {optimisticData.categories?.length > maxCategories + 1 && '...'}
@@ -119,7 +123,7 @@ export const Day = ({ data, settings, selectedCategories }) => {
           <DayInfo
             data={optimisticData.all_expenses}
             selectedCategories={selectedCategories}
-            categories={{...settings.categories, ...settings.deleted_categories}}
+            categories={{ ...settings.categories, ...settings.deleted_categories }}
             onDeleteExpense={deleteExpense}
           />
         )}
@@ -143,7 +147,7 @@ export const DayEmpty = ({ day }) => {
 
 // dateString yyyy-dd-mm
 function getWeekday(dateString) {
-  return new Date(dateString).toLocaleDateString(DATE_FORMAT, { weekday: 'long',  timeZone: 'UTC' })
+  return new Date(dateString).toLocaleDateString(DATE_FORMAT, { weekday: 'long', timeZone: 'UTC' })
 }
 
 function isToday(dateString) {

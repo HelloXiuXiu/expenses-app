@@ -3,7 +3,7 @@ import s from './styles.module.css'
 
 const icons = {
   error: '/static/errorIcon.svg',
-  success: '/static/successIcon.svg',
+  success: '/static/successIcon.svg'
 }
 
 /*

@@ -7,7 +7,6 @@
     "singleBodyPosition": "sameLine",
     "trailingCommas": "never",
     "operatorPosition": "nextLine",
-    "preferSingleLine": true,
     "module.sortImportDeclarations": "maintain",
     "importDeclaration.forceSingleLine": true
   },

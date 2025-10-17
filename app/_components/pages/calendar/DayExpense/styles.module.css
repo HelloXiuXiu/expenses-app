@@ -4,7 +4,7 @@
   gap: 4px;
   padding: 12px var(--side-padding);
   border-top: 1px solid var(--border);
-  transition: opacity .6s;
+  transition: opacity 0.6s;
 }
 
 .wrap:last-of-type {

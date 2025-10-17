@@ -26,13 +26,13 @@ function SignInButton() {
       disabled={isPending}
       onClick={() => handleLogin('github')}
       style={{ maxWidth: '200px', display: 'flex', gap: '4px', justifyContent: 'center', alignItems: 'center' }}
-    > 
+    >
       <img
         src="/static/github.svg"
         width={24}
         height={24}
-        alt='Github logo'
-       />
+        alt="Github logo"
+      />
       <span>{isPending ? '...logging in' : 'Signin with GitHub'}</span>
     </Button.Large>
   )

@@ -6,13 +6,12 @@ export const SelectCategoriesPopup = ({
   selectedCategories,
   onSetSelectedCategories,
   showDeleted,
-  setShowDeleted,
+  setShowDeleted
 }) => {
   const isNoCategories = !allCategories || !Object.keys(allCategories).length
   const isNoSelected = selectedCategories === ''
-  const isAllSelected =
-    Object.keys(allCategories).sort().join(',') ===
-    selectedCategories.split(',').sort().join()
+  const isAllSelected = Object.keys(allCategories).sort().join(',')
+    === selectedCategories.split(',').sort().join()
 
   function handleToggleCategory(category) {
     onSetSelectedCategories(selected => {
@@ -36,7 +35,7 @@ export const SelectCategoriesPopup = ({
       const updatedCategories = Object.keys(allCategories).join(',')
       onSetSelectedCategories(updatedCategories)
       localStorage.setItem('selectedCategories', updatedCategories)
-    }  
+    }
 
     // hide all
     if (isAllSelected) {
@@ -47,29 +46,31 @@ export const SelectCategoriesPopup = ({
 
   return (
     <div className={s.categories}>
-      {isNoCategories ? (
-        <div className={s.noCategories}>
-          [ no categories created ]
-        </div> 
-        ) : (
-        <ul className={s.categoriesList}>
-          {Object.keys(allCategories).map(category => (
-            <li
-              key={category}
-              className={s.category}
-              onClick={() => handleToggleCategory(category)}
-            >
-              <div
-                className={s.categoryContent}
-                style={{ opacity: !!selectedCategories?.includes(category) ? '1' :'0.2'}}
+      {isNoCategories
+        ? (
+          <div className={s.noCategories}>
+            [ no categories created ]
+          </div>
+        )
+        : (
+          <ul className={s.categoriesList}>
+            {Object.keys(allCategories).map(category => (
+              <li
+                key={category}
+                className={s.category}
+                onClick={() => handleToggleCategory(category)}
               >
-                <span className={s.categotyText}>{category}</span>
-                <span style={{ backgroundColor: allCategories[category] }} className={s.dot}></span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+                <div
+                  className={s.categoryContent}
+                  style={{ opacity: !!selectedCategories?.includes(category) ? '1' : '0.2' }}
+                >
+                  <span className={s.categotyText}>{category}</span>
+                  <span style={{ backgroundColor: allCategories[category] }} className={s.dot}></span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       <div className={s.buttons}>
         <Button.Small
           style={{ opacity: showDeleted ? '1' : '0.4', flexGrow: 1, padding: '4px' }}
@@ -85,7 +86,7 @@ export const SelectCategoriesPopup = ({
           style={{ minWidth: '85px', flexGrow: 1, padding: '4px' }}
         >
           {isAllSelected ? 'hide all' : isNoSelected ? 'show all' : 'clear all'}
-        </Button.Small> 
+        </Button.Small>
       </div>
     </div>
   )

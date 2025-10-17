@@ -5,14 +5,14 @@ import { updateSettingsAction } from '@/lib/actions/actions'
 import { Button } from '@/app/_components/common/ui/Button'
 import s from './styles.module.css'
 
-const DEFAULT_COLOR = '#EEEEEE'
+const DEFAULT_COLOR = '#eeeeee'
 
 export default function UpdateSettingsForm({ initialSettings }) {
   const [form, setForm] = useState({
     username: initialSettings.username || '',
     currency: initialSettings.currency || '',
     categories: initialSettings.categories || {},
-    deleted_categories: initialSettings.deleted_categories || {},
+    deleted_categories: initialSettings.deleted_categories || {}
   })
 
   const [newCategory, setNewCategory] = useState('')
@@ -29,7 +29,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
   const handleCategoryColorChange = (title, color) => {
     setForm(prev => ({
       ...prev,
-      categories: { ...prev.categories, [title]: color },
+      categories: { ...prev.categories, [title]: color }
     }))
   }
 
@@ -37,7 +37,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
     if (newCategory && !form.categories[newCategory]) {
       setForm(prev => ({
         ...prev,
-        categories: { ...prev.categories, [newCategory]: newColor },
+        categories: { ...prev.categories, [newCategory]: newColor }
       }))
       setNewCategory('')
       setNewColor(DEFAULT_COLOR)
@@ -55,7 +55,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
     const deletedCategories = getDeletedCategories(initialSettings.categories, form.categories)
     const newDeletedCategories = {
       ...initialSettings.deleted_categories,
-      ...deletedCategories,
+      ...deletedCategories
     }
     for (const key in newDeletedCategories) {
       if (key in form.categories) {
@@ -83,7 +83,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
       <div className={s.field}>
         <label className={s.label}>Username</label>
         <input
-          name='username'
+          name="username"
           value={form.username}
           onChange={handleChange}
           className={s.input}
@@ -93,14 +93,14 @@ export default function UpdateSettingsForm({ initialSettings }) {
       <div className={s.field}>
         <label className={s.label}>Currency</label>
         <select
-          name='currency'
+          name="currency"
           value={form.currency}
           onChange={handleChange}
           className={s.input}
         >
-          <option value='USD'>USD</option>
-          <option value='EUR'>EUR</option>
-          <option value='RSD'>RSD</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="RSD">RSD</option>
         </select>
       </div>
 
@@ -110,14 +110,14 @@ export default function UpdateSettingsForm({ initialSettings }) {
           {Object.entries(form.categories).map(([title, color]) => (
             <div key={title} className={s.category}>
               <input
-                type='color'
+                type="color"
                 value={color}
                 onChange={e => handleCategoryColorChange(title, e.target.value)}
                 className={s.colorInput}
               />
               <span>{title}</span>
               <button
-                type='button'
+                type="button"
                 onClick={() => handleRemoveCategory(title)}
                 className={s.removeButton}
               >
@@ -128,7 +128,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
 
           <div className={s.category}>
             <input
-              type='color'
+              type="color"
               value={newColor}
               onChange={e => setNewColor(e.target.value)}
               className={s.colorInput}
@@ -136,11 +136,11 @@ export default function UpdateSettingsForm({ initialSettings }) {
             <input
               value={newCategory}
               onChange={e => setNewCategory(e.target.value)}
-              placeholder='New category'
+              placeholder="New category"
               className={s.input}
             />
             <button
-              type='button'
+              type="button"
               onClick={handleAddCategory}
               className={s.addButton}
             >
@@ -150,7 +150,7 @@ export default function UpdateSettingsForm({ initialSettings }) {
         </div>
       </div>
 
-      <Button.Large type='submit' disabled={isPending || !isDataChanged(initialSettings, form)}>
+      <Button.Large type="submit" disabled={isPending || !isDataChanged(initialSettings, form)}>
         {isPending ? 'Saving...' : 'Save Settings'}
       </Button.Large>
 
@@ -224,7 +224,7 @@ function isCategoriesChanged(prev, cur) {
 }
 
 function isDataChanged(prev, cur) {
-  return prev.username !== cur.username ||
-    prev.currency !== cur.currency ||
-    isCategoriesChanged(prev.categories, cur.categories)
+  return prev.username !== cur.username
+    || prev.currency !== cur.currency
+    || isCategoriesChanged(prev.categories, cur.categories)
 }

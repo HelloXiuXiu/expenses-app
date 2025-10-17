@@ -18,7 +18,7 @@ export const AnimatedPopup = ({
   closeClass = 'animated-popup-close-trig',
   onSetIsOpen,
   styles = {},
-  children,
+  children
 }) => {
   const popupBox = useRef(null)
   const isEventStartedInside = useRef(false)
@@ -67,7 +67,7 @@ export const AnimatedPopup = ({
       style={{
         '--popup-width': `${width}px`,
         '--popup-max-height': `${maxHeight}px`,
-        ...styles,
+        ...styles
       }}
     >
       <PopupHeader closeClass={closeClass} />

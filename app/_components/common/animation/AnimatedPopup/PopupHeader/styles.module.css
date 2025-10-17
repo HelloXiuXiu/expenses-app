@@ -8,7 +8,7 @@
 .closeIcon {
   width: 10px;
   height: 10px;
-  background-color: #CECACA;
+  background-color: #cecaca;
   border-radius: 5px;
   margin-left: auto;
   cursor: pointer;
@@ -16,5 +16,5 @@
 }
 
 .closeIcon:hover {
-  background-color: #BBB6B6;
+  background-color: #bbb6b6;
 }

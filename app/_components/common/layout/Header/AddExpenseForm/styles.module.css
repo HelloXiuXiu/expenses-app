@@ -73,7 +73,7 @@
 }
 
 .errorMsg::after {
-  content: ' ';
+  content: " ";
   position: absolute;
   bottom: -7px; /* move below border */
   left: 50%;
@@ -82,8 +82,8 @@
   height: 14px;
   background: white;
   box-shadow:
-    1px 0 0 0 #e0e0e0,    /* right */
-    0 1px 0 0 #e0e0e0;    /* bottom */
+    1px 0 0 0 #e0e0e0 /* right */,
+    0 1px 0 0 #e0e0e0; /* bottom */
   border-bottom-right-radius: 3px;
 }
 

@@ -10,17 +10,17 @@
   --side-padding: 20px;
 
   --background-00: #ffffff;
-  --background-01: #EBE9E9;
-  --background-02: #ADADAD;
+  --background-01: #ebe9e9;
+  --background-02: #adadad;
   --background-03: #111111;
 
-  --border: #E5E5E5;
-  --border-light: #F9F9F9;
+  --border: #e5e5e5;
+  --border-light: #f9f9f9;
 
-  --overlay: rgba(110, 101, 101, 0.20);
+  --overlay: rgba(110, 101, 101, 0.2);
 
   --primary: #000000;
-  --primary-hover: #F0F0F0;
+  --primary-hover: #f0f0f0;
 }
 
 @media (prefers-color-scheme: dark) {

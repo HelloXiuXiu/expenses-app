@@ -12,7 +12,7 @@ function setToastBoxStyles(elem) {
     bottom: '0',
     pointerEvents: 'none',
     overflow: 'hidden',
-    zIndex: '99999999',
+    zIndex: '99999999'
   })
 }
 
@@ -23,15 +23,7 @@ function showToast({ text, icon, type, position }) {
   let toastElement = null
 
   const root = ReactDOM.createRoot(container)
-  root.render(
-    <Toast
-      ref={(el) => (toastElement = el)}
-      text={text}
-      icon={icon}
-      type={type}
-      position={position}
-    />
-  )
+  root.render(<Toast ref={(el) => (toastElement = el)} text={text} icon={icon} type={type} position={position} />)
 
   setTimeout(() => {
     if (!toastElement) return

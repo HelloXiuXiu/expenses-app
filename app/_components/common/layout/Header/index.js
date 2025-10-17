@@ -12,15 +12,11 @@ export default async function Header() {
 
   return (
     <header className={s.header}>
-      <Link href='/calendar' className={s.headerLink}>Calendar/Days</Link>
+      <Link href="/calendar" className={s.headerLink}>Calendar/Days</Link>
       {/* <Link href='/chart'>Chart</Link> */}
       <NewExpense settings={settings} />
       <div>
-      {user ? (
-        <UserAvatar user={user} />
-        ) : (
-        <Link href='/login'>Login</Link>
-      )}
+        {user ? <UserAvatar user={user} /> : <Link href="/login">Login</Link>}
       </div>
     </header>
   )
